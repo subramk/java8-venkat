@@ -12,7 +12,7 @@ public class StrategyPatternUsingLambdas {
 	
 	//Adding Even and Odd numbers - Java 7 way 
 	
-	public  Integer totalAllValuesUsing_normalWay(List<Integer> listOfNumbers) {
+	public  Integer totalAllValues_Java7(List<Integer> listOfNumbers) {
 		Integer total = 0 ; 
 		for(Integer number : listOfNumbers){
 			total += number; 
@@ -20,7 +20,7 @@ public class StrategyPatternUsingLambdas {
 		return total ;
 	}
 
-	public int totalOnlyEvenNumbersInCollection(List<Integer> numbers) {
+	public int totalEvenNumbersJava7(List<Integer> numbers) {
 		Integer total = 0 ; 
 		for(Integer number : numbers){
 			if( number % 2 == 0){
@@ -30,7 +30,7 @@ public class StrategyPatternUsingLambdas {
 		return total ;
 	} 
 	
-	public int totalOddNumbersInCollection(List<Integer> numbers) {
+	public int totalOddNumbersJava7(List<Integer> numbers) {
 		Integer total = 0 ; 
 		for(Integer number : numbers){
 			if( number % 2 != 0){

@@ -26,7 +26,7 @@ private StrategyPatternUsingLambdas simplStrategyPatternUsingLambdasTest;
 	
 	@Test
 	public void test_1(){
-		int total = simplStrategyPatternUsingLambdasTest.totalAllValuesUsing_normalWay(numbers);
+		int total = simplStrategyPatternUsingLambdasTest.totalAllValues_Java7(numbers);
 		Assert.assertEquals(total, 15);
 	}
 	
@@ -34,7 +34,7 @@ private StrategyPatternUsingLambdas simplStrategyPatternUsingLambdasTest;
 	
 	@Test
 	public void test_EVEN_Numbers_in_Collection(){
-		int total = simplStrategyPatternUsingLambdasTest.totalOnlyEvenNumbersInCollection(numbers);
+		int total = simplStrategyPatternUsingLambdasTest.totalEvenNumbersJava7(numbers);
 		Assert.assertEquals(6, total);
 		
 		
@@ -43,7 +43,7 @@ private StrategyPatternUsingLambdas simplStrategyPatternUsingLambdasTest;
 	//Java 7 
 	@Test
 	public void test_ODD_Numbers_in_Collection(){
-		int total = simplStrategyPatternUsingLambdasTest.totalOddNumbersInCollection(numbers);
+		int total = simplStrategyPatternUsingLambdasTest.totalOddNumbersJava7(numbers);
 		Assert.assertEquals(9, total);
 		
 		

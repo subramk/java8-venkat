@@ -14,7 +14,7 @@ import java.util.function.Consumer;
  * @author kasi
  *
  */
-public class ConsumerFunctionalInterface {
+public class ConsumerExample {
 
 	final static List<String> friends =  Arrays.asList("Brian", "Nate", "Neal", "Raju", "Sara", "Scott");
 	
@@ -32,9 +32,9 @@ public class ConsumerFunctionalInterface {
 		});
 		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("Printing using a Method Reference :- method signature should be public void accept(T t) ");
+		System.out.println("Printing with ForEach using a Consumer --- public void accept(T t) ");
 		
-		friends.forEach(ConsumerFunctionalInterface::printNames);
+		friends.forEach(ConsumerExample::printNames);
 		
 	}
 	
@@ -42,6 +42,9 @@ public class ConsumerFunctionalInterface {
 		System.out.print(" " +  name + " ");
 	}
 	
+	public static void main(String[] args) {
+		 print_Using_Consumer_Functional_Interface();
+	}
 	
 	
 	

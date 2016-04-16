@@ -16,11 +16,11 @@ public class SimpleForEach {
 
 		// Internal Iterator  - Tell the compiler WHAT  to do , not HOW 
 
-		// forEach takes a Consumer FI as its parameter ( FI -- functional Interface ) . 
+		// forEach takes a lambda expression ... this lambda accepts a Consumer FI as its parameter ( FI -- functional Interface ) . 
 		names.forEach(e -> System.out.println(e));
 		//USING METHOD REFERENCES
 		
-		System.out.println("~~~~~~~~~~~~~~~~ printing using method referecnces ...................");
+		System.out.println("~~~~~~~~~~~~~~~~ Using Method References to print names...");
 		names.forEach(SimpleForEach::printInCaps);
 		
 		
