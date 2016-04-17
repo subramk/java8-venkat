@@ -2,14 +2,13 @@ package com.java8.predicates;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
  * 
- * {@link java.util.function.Predicate} is a FI in Java 8 that has a SAM test() that takes in one parameter and returns a
- * Boolean . 
+ * {@link java.util.function.Predicate} is a Functional Interface (FI ) in Java 8 that has a Single Abstract Method (SAM) called test() . The method 
+ * test() that takes in one parameter and returns a  Boolean . 
  * 
  * Normal usage . As a parameter to Stream’s methods, like filter() and anyMatch()
  * 
@@ -35,7 +34,8 @@ public class UsingPredicates {
 	// using Method REference 
 	final static long  friends_names_startsWith_N = friends
 													.stream()
-													.filter(UsingPredicates::filterNames).count() ; 
+													.filter(UsingPredicates::filterByName)
+													.count() ; 
 	
 	// We can remove duplication by assigning the test condition to a Predicate 
 	final Predicate<String> startsWithN = name -> name.startsWith("N");
@@ -47,40 +47,46 @@ public class UsingPredicates {
 
 	// .... But doing it the Above way will duplicate a predicate for each Letter . 
 	
-	// We can remove this duplication, by Parameterizing the letter that we want to check on ....
-	public static Predicate<String> checkIfStartsWith(final String letter){
+	// We can remove this duplication, by Parameterizing 
+	// the letter that we want to check on ....
+	
+	public static Predicate<String> checkIfWordStartsWith(final String letter){
 		return name  -> name.startsWith(letter);
 	}
 	
-	// Now 
-	final long startingWith_N  = friends.stream().filter(checkIfStartsWith("N")).count(); 
-	final long startingWith_B  = friends.stream().filter(checkIfStartsWith("B")).count(); 
+	// Now this 
+	final long startingWith_N  = friends.stream().filter(checkIfWordStartsWith("N")).count(); 
+	final long startingWith_B  = friends.stream().filter(checkIfWordStartsWith("B")).count(); 
 	
 	// Note : checkIfStartsWith() is a higher order Function , as it returns a Function
 	
+	
+	// More Refactoring 
 	// checkIfStartsWith() takes a String as a parameter and returns a Predicate<String> , 
-	// We can model this behaviour as a java.util.function.Function
+	// ie there is a Input and an Output , 
+	// In Java 8 , there is a FunctionalInterface for this type  ... 
+	// This FI is called java.util.function.Function<I,O>
 	
-	
+		
 	final Function<String, Predicate<String>> startsWithLetter =
 			(String letter) -> {
 			Predicate<String> checkStartsWith = 	(String name) -> name.startsWith(letter);
 			return checkStartsWith;
 			};
 	
-	// This can be refactored further like this by removing the type information ( ie String ) 
+	// We can remove Type information as Java 8 will infer this .  
 	final Function<String, Predicate<String>> startsWithLetter2 =
 					letter -> {
 					Predicate<String> checkStartsWith = 	name -> name.startsWith(letter);
 					return checkStartsWith;
 					};
 	
-	// removing redundant return and Predicate<String> checkStartsWith	- Very very concise....		
+	// removing redundant return keyword and Predicate<String> checkStartsWith	- Very very concise....		
 	final Function<String, Predicate<String>> startsWithLetter3 =	letter -> name -> name.startsWith(letter);
 							
 	
 	
-	public static boolean filterNames(String name){
+	public static boolean filterByName(String name){
 		return name.startsWith("N") ? true : false; 
 			
 	}
@@ -91,17 +97,11 @@ public class UsingPredicates {
 			System.out.print(" " +  str + " ");
 		}
 		System.out.println();
-		
-		
 	}
-	
-	
 	
 	
 	public static void main(String z[]){
-		UsingPredicates dd = new UsingPredicates();
-		dd.printAllFriends();
+		printAllFriends();
 		
 	}
-
 }
