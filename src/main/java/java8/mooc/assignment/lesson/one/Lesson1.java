@@ -1,8 +1,10 @@
 package java8.mooc.assignment.lesson.one;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -13,16 +15,17 @@ public class Lesson1 {
 	   */
 	  public static  void runExercises() {
 	    System.out.println("JDK 8 Lambdas and Streams MOOC Lesson 1");
+	    
 	    System.out.println("Running exercise 1 solution...");
-//	    exercise1();
-//	    System.out.println("Running exercise 2 solution...");
-	//    exercise2();
-//	    System.out.println("Running exercise 3 solution...");
-	    exercise3();
-//	    System.out.println("Running exercise 4 solution...");
-//	    exercise4();
-//	    System.out.println("Running exercise 5 solution...");
-//	    exercise5();
+	    exercise1();
+	    System.out.println("Running exercise 2 solution...");
+	    exercise2();
+	    System.out.println("Running exercise 3 solution...");
+	     exercise3();
+	    System.out.println("Running exercise 4 solution...");
+	    exercise4();
+	    System.out.println("Running exercise 5 solution...");
+	    exercise5();
 	  
 	  }
 
@@ -39,6 +42,7 @@ public class Lesson1 {
 	   * of Strings provided.
 	   */
 	  static  void exercise1() {
+		
 	    List<String> list = Arrays.asList(
 	        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot","Gorilla","Horse","Inkbottle");
 
@@ -57,6 +61,7 @@ public class Lesson1 {
 	   * Remove the words that have odd lengths from the list.
 	   */
 	  static  void exercise2() {
+			
 		  final List<String> names = Arrays.asList(
 			        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot");
 		
@@ -78,24 +83,58 @@ public class Lesson1 {
 		  
 		 List<String> names = Arrays.asList(
 			        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot");
+		 
+		 // Can be done this way as well 
+		 // names.replaceAll(String::toUpperCase);
 		
-		 names.forEach(n -> n.toUpperCase());
+		 // or Using a Function which takes input and Returns output 
+		 Function<String,String> convertToUpperCase = n -> n.toUpperCase();
 		 
+		 List<String> wordsCapitalized = 		names	.stream()
+				 										.map(convertToUpperCase)
+				 										.collect(Collectors.toList());
 		 
+		 wordsCapitalized.forEach(System.out::println);
 		 
 	  }
 	
-	    
-	  // private helper methods 
-	  static String toUpper(String s){
-		  return s.toUpperCase() ; 
-	  }
-	  
 
+	  /**
+	   * Exercise 4
+	   *
+	   * Convert every key-value pair of the map into a string and append them all
+	   * into a single string, in iteration order.
+	   */
+	  
+	  static  void exercise4() {
+		  
+	    Map<String, Integer> map = new TreeMap<>();
+	    map.put("c", 3);
+	    map.put("b", 2);
+	    map.put("a", 1);
+	    
+	    StringBuilder sbr = new StringBuilder();
+	    
+	    map.forEach((k,v) -> sbr.append(k+v));
+	    String result = sbr.toString(); 
+	    
+	    System.out.println( "result is " +  result );
+	    
+   	  }
 	  
 	  
-	  
-	  
+	  /**
+	   * Exercise 5
+	   *
+	   * Create a new thread that prints the numbers from the list.
+	   */
+	  static  void exercise5() {
+	    List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+	    		new Thread( () ->   list.forEach(System.out::println)).start(); 
+	    
+	    
+	  }
 	  
 	  //Main to run this as a Java Application 
 	  
