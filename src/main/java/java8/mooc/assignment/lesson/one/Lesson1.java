@@ -93,9 +93,7 @@ public class Lesson1 {
 		 List<String> wordsCapitalized = 		names	.stream()
 				 										.map(convertToUpperCase)
 				 										.collect(Collectors.toList());
-		 
 		 wordsCapitalized.forEach(System.out::println);
-		 
 	  }
 	
 
@@ -131,9 +129,7 @@ public class Lesson1 {
 	  static  void exercise5() {
 	    List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-	    		new Thread( () ->   list.forEach(System.out::println)).start(); 
-	    
-	    
+	    	new Thread( () ->   list.forEach(System.out::println)).start(); 
 	  }
 	  
 	  //Main to run this as a Java Application 
