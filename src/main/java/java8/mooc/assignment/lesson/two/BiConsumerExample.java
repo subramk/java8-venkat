@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class BiConsumerExample {
 
@@ -18,18 +19,10 @@ public class BiConsumerExample {
 	       BiConsumer<Integer,String> biConsumer = (k,v) -> System.out.println("Key:" +k  + "   Value  " + v);
 		
 	       map.forEach(biConsumer);
-	     
-	       BiFunction<Integer, Integer, String> biFunction = (num1, num2) -> "Result:" +(num1 + num2);
-	       System.out.println(biFunction.apply(20,25));
-	       
-	       
-		
 	}
 	
 	public static void main(String[] args) {
 		  doWork(); 
 	}
-	 
-	 
 	 
 }
