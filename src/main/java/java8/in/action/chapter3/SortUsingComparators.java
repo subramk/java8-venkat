@@ -43,17 +43,14 @@ public class SortUsingComparators {
 	        		listOfApples.sort(	comparing(Apple::getWeight)
 	        						.reversed()
 	        			   		  );
-	       // 4) Using stream , we can do this .  
+	       // 4) Passing a Function that has the sorting logic to the sorted() method and then using Collectors to collect the result;   
 	        		listOfApples	.stream()
 	        					.sorted(compareWeightDescending)
 	        					.collect(toList());
 	        
-	        //	5) Pasing a Function to the comparing() method that returns a Comparator. 
+	        //	5) Passing a Function to the comparing() method that returns a Comparator. 
 	        	Function<Apple,Integer> compareByName = apple -> apple.getWeight();
 	        	listOfApples.stream().sorted(comparing(compareByName));
-	        		
-	        		
-	     	
 	        		
 	        //		
 	        
@@ -63,6 +60,7 @@ public class SortUsingComparators {
 	}
 	
 	private static void fluentComparisons() {
+		
 		List<Apple> listOfApples = new ArrayList<>();
         listOfApples.addAll(Arrays.asList(new Apple("green",80), new Apple("pink",155), new Apple("red",212)));
         
@@ -71,19 +69,28 @@ public class SortUsingComparators {
         Function<Apple,String>  byColour  = apple -> apple.getColour() ;
         
         
-        // 1 
-        List<Apple> applesSortedByWeightColour = new ArrayList<>();
-        applesSortedByWeightColour = listOfApples
+        // 1  Chaining Comparators using Functions to store the logic && then using utility methods of 
+         //   comparing/thenComparing on the sorted() . 
+        
+        List<Apple> applesSortedByWeightColourDescription = new ArrayList<>();
+        
+        applesSortedByWeightColourDescription = 
+        			listOfApples
         			.stream()
         			.sorted(
-        					comparing(byWeight)
-        					.thenComparing(byColour)).collect(toList()); 
+        					 comparing(byWeight)
+        					.thenComparing(byColour)
+        					.thenComparing(byDescription)
+        					)
+        			.collect(toList()); 
         
         
-        //2 Chaining Comparators using thenComparing 
+        //2 Instead of using Functions , we can chain the Comparators using Method References . We can rely on the 
+        //  sort method of the List iteself  - No need to use Streaming operations here. 
         
 		listOfApples.sort(	comparing(Apple::getWeight)
 							.thenComparing(Apple::getDescription)
+							.thenComparing(Apple::getColour)
 	   		  	 	  	 );
 
      
