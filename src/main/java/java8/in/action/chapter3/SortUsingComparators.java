@@ -1,56 +1,93 @@
 package java8.in.action.chapter3;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.reverseOrder;
-
+import java.util.function.Function;
 
 public class SortUsingComparators {
 
 	
+	private static  Comparator<Apple> compareWeightDescending  = (Apple a1,Apple a2) -> a1.differenceInWeight(a2)  ;
+	private static  Comparator<Apple> compareWeightAscending = compareWeightDescending.reversed() ; 
+	
+	
 	public static void main(String[] args) {
-		doWork();
+		sortingOptions();
+		
+		fluentComparisons(); 
 		
 	}
 	
-	public static void doWork(){
-		
 	
-			List<Apple> inventory = new ArrayList<>();
-	        inventory.addAll(Arrays.asList(new Apple("green",80), new Apple("pink",155), new Apple("red",212)));
+
+	public static void sortingOptions(){
+			List<Apple> listOfApples = new ArrayList<>();
+	        listOfApples.addAll(Arrays.asList(new Apple("green",80), new Apple("pink",155), new Apple("red",212)));
 	        //inventory.sort(new AppleComparator());
 	        //System.out.println(inventory);
 	        
 	        
-	        // traditional way 
-	        inventory.sort(new AppleComparator());
+	        // 1) traditional way 
+	        listOfApples.sort(new AppleComparator());
 	       
-	        // using comparing static method 
-	        inventory.sort(comparing(Apple::getWeight));
+	        // 2) using comparing static method 
+	        listOfApples.sort(comparing(Apple::getWeight));
 	        
 	                   		
-	       // Reverse the comparing logic Using .reversed
-	        		inventory.sort(	comparing(Apple::getWeight)
+	       // 3) Reverse the comparing logic Using .reversed
+	        		listOfApples.sort(	comparing(Apple::getWeight)
 	        						.reversed()
 	        			   		  );
-	       
-	       // Chaining Comparators using thenComparing
-	        		inventory.sort(	comparing(Apple::getWeight)
-	        						.thenComparing(Apple::getDescription)
-    			   		  	 	  );
+	       // 4) Using stream , we can do this .  
+	        		listOfApples	.stream()
+	        					.sorted(compareWeightDescending)
+	        					.collect(toList());
 	        
+	        //	5) Pasing a Function to the comparing() method that returns a Comparator. 
+	        	Function<Apple,Integer> compareByName = apple -> apple.getWeight();
+	        	listOfApples.stream().sorted(comparing(compareByName));
+	        		
+	        		
+	     	
+	        		
+	        //		
 	        
 	        // Print the List after Sorting 
-	        inventory.forEach(SortUsingComparators::print); 
-	       
-	        
-	        
-		
+	        listOfApples.forEach(SortUsingComparators::print); 
+	  
+	}
 	
+	private static void fluentComparisons() {
+		List<Apple> listOfApples = new ArrayList<>();
+        listOfApples.addAll(Arrays.asList(new Apple("green",80), new Apple("pink",155), new Apple("red",212)));
+        
+        Function<Apple,Integer> byWeight = apple -> apple.getWeight() ; 
+        Function<Apple,String>  byDescription = apple -> apple.getDescription() ;
+        Function<Apple,String>  byColour  = apple -> apple.getColour() ;
+        
+        
+        // 1 
+        List<Apple> applesSortedByWeightColour = new ArrayList<>();
+        applesSortedByWeightColour = listOfApples
+        			.stream()
+        			.sorted(
+        					comparing(byWeight)
+        					.thenComparing(byColour)).collect(toList()); 
+        
+        
+        //2 Chaining Comparators using thenComparing 
+        
+		listOfApples.sort(	comparing(Apple::getWeight)
+							.thenComparing(Apple::getDescription)
+	   		  	 	  	 );
+
+     
+		
 	}
 	
 	public static void print(Apple apple){

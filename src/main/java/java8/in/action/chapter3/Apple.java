@@ -61,4 +61,18 @@ public class Apple {
 		
 	}
 	
+	public int differenceInWeight(final Apple other){
+		return weight - other.weight ; 
+		
+	}
+	
+	
+	public String toString() {
+        return "Apple{" +
+               "Colour ='" + colour + '\'' +
+               ", weight=" + weight +
+               ", description=" + description +
+               '}';
+    }
+	
 }
