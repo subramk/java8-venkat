@@ -1,8 +1,11 @@
 package com.stl.java8.examples;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * 
@@ -22,6 +25,14 @@ public class ConsumerExample {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("Printing using a Consumer FI implementation ");
 		
+		// Supplier TAKES no Args and returns the desired type as speficied in Supplier<T>
+		// Examples . 
+		Supplier<String> stringSupply = () -> "someStringReturned" ; 
+		
+		Supplier<Date> todaysDate = () -> Calendar.getInstance().getTime() ; 
+		
+		
+		// Consumer - just consumes , could have side effects. 
 		//  Usage : used in forEach() method of the StreamsAPI 
 		friends.forEach( new Consumer<String>() {
 			@Override

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -15,14 +16,18 @@ import java.util.function.Predicate;
  * 
  * A Function<T, R> represents a function that takes a parameter of type T and returns a result of
  * type R. This is more general than a Predicate that always returns a boolean . We can use a Function anywhere we want to 
- * transform an input to another value, it’s quite logical that the map() method uses it as its parameter.
+ * transform an input to another value, it’s quite logical that the map() method of the Stream Interface  uses it as its parameter.
+ * 
+ * 
  * 
  *  @author kasi
  *
  */
 public class UsingPredicates {
-	
-	
+
+	public static void main(String z[]){
+		printAllFriends();
+	}
 	
 	final static List<String> friends =  Arrays.asList("Brian", "Nate", "Neal", "Raju", "Sara", "Scott");
 	final static List<String> comrades = Arrays.asList("Kate", "Ken", "Nick", "Paula", "Zach");
@@ -37,6 +42,18 @@ public class UsingPredicates {
 													.filter(UsingPredicates::filterByName)
 													.count() ; 
 	
+	
+	final Function<String, Predicate<String>> startsWithLetter4 =	letter -> name -> name.startsWith(letter);
+	
+		
+	long countOfNamesBeginningWithLetterN  = 
+			friends
+			.stream()
+			.filter(startsWithLetter4.apply("n")) // passing a Function as a parmeter to Filter which is also another Function - this is what is called higher order functions. 
+			.count() ; 
+	
+	
+	
 	// We can remove duplication by assigning the test condition to a Predicate 
 	final Predicate<String> startsWithN = name -> name.startsWith("N");
 	final Predicate<String> startsWithB = name -> name.startsWith("B");
@@ -47,29 +64,30 @@ public class UsingPredicates {
 
 	// .... But doing it the Above way will duplicate a predicate for each Letter . 
 	
-	// We can remove this duplication, by Parameterizing 
-	// the letter that we want to check on ....
+	// We can remove this duplication, by Parameterizing the letter that we want to check on ....
 	
 	public static Predicate<String> checkIfWordStartsWith(final String letter){
 		return name  -> name.startsWith(letter);
 	}
 	
-	// Now this 
+	
+	// Now we can go like this. 
 	final long startingWith_N  = friends.stream().filter(checkIfWordStartsWith("N")).count(); 
 	final long startingWith_B  = friends.stream().filter(checkIfWordStartsWith("B")).count(); 
-	
-	// Note : checkIfStartsWith() is a higher order Function , as it returns a Function
+							    
+
+	// Note : checkIfStartsWith() is a higher order Function , as its ReturnType a Function as and as it is passed  like a  parameter to the Filter method
+	// the streams Interface. 
 	
 	
 	// More Refactoring 
 	// checkIfStartsWith() takes a String as a parameter and returns a Predicate<String> , 
-	// ie there is a Input and an Output , 
+	// ie there is a Input of a String and an Output of a Predicate .  
 	// In Java 8 , there is a FunctionalInterface for this type  ... 
-	// This FI is called java.util.function.Function<I,O>
+	// This FI is called java.util.function.Function<I,O> or in API terms it is called Function(T,R) 
 	
-		
-	final Function<String, Predicate<String>> startsWithLetter =
-			(String letter) -> {
+	// Input STring , return Predicate<String> 	
+	final Function<String, Predicate<String>> startsWithLetter = 	(String letter) -> {
 			Predicate<String> checkStartsWith = 	(String name) -> name.startsWith(letter);
 			return checkStartsWith;
 			};
@@ -82,10 +100,10 @@ public class UsingPredicates {
 					};
 	
 	// removing redundant return keyword and Predicate<String> checkStartsWith	- Very very concise....		
-	final Function<String, Predicate<String>> startsWithLetter3 =	letter -> name -> name.startsWith(letter);
-							
+	//final Function<String, Predicate<String>> startsWithLetter3 =	letter -> name -> name.startsWith(letter);
 	
 	
+		
 	public static boolean filterByName(String name){
 		return name.startsWith("N") ? true : false; 
 			
@@ -96,12 +114,11 @@ public class UsingPredicates {
 		for(String str : friends){
 			System.out.print(" " +  str + " ");
 		}
-		System.out.println();
-	}
-	
-	
-	public static void main(String z[]){
-		printAllFriends();
+		System.out.println("....");
+		System.out.println(" ~~~~~~~~~ Using the JAva 8 forEach ~~~~~~~~~~~");
+		friends.forEach( friend -> System.out.println("   " + friend + "   "));
 		
 	}
+	
+	
 }
