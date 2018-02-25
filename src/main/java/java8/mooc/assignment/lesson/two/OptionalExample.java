@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
+import junit.framework.Assert;
+
 /**
  * 
  * Run this class as a Junit Test 
@@ -36,7 +38,7 @@ public class OptionalExample {
 		        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot","Gorilla","Horse","Inkbottle", "alpha");
 		
 		Stream<String>  distinctStream = list.stream().distinct();
-		assertTrue(distinctStream.count() == 9);
+		Assert.assertTrue(distinctStream.count() == 9);
 	}
 	
 	@Test
@@ -54,7 +56,7 @@ public class OptionalExample {
 		
 		if(!topName.isPresent()){
 			System.out.println("list is empty");
-			assertTrue(topName.isPresent() == Boolean.FALSE);
+			Assert.assertTrue(topName.isPresent() == Boolean.FALSE);
 		}
 	}
 	
