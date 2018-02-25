@@ -42,25 +42,18 @@ public class ConstructorAndMethodReferences {
 	}
 
 	public static List<Apple> populateAppleWithWeights(List<Integer> weights, Function<Integer,Apple> f) {
-		
 		List<Apple> apples = new ArrayList<Apple>(); 
 		
 		for(Integer weight : weights){
 			apples.add(f.apply(weight));
 		}
 		return apples ; 
-		
 	}
 	
+
 	private static void filterFruits() {
 		List<Apple> apples  = orderApples(); 
-		
-		
-		
 	}
-
-
-	
 	
 	private static List<Apple> orderApples(){
 		List<Apple> apples = new ArrayList<>();
