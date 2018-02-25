@@ -1,17 +1,17 @@
 package com.java8.function.examples;
 
 public class Apple {
-	
+
 	private int weight ; 
 	private String colour ; 
 	private String description ;
-	
+
 	public Apple(int weight, String colour, String desc) {
 		this.weight = weight; 
 		this.colour = colour ; 
 		this.description = desc ; 
 	}
-	
+
 	public int getWeight() {
 		return weight;
 	}
