@@ -1,4 +1,4 @@
-package com.java8.function.examples;
+package java8.in.action;
 
 public class Apple {
 
@@ -10,6 +10,15 @@ public class Apple {
 		this.weight = weight; 
 		this.colour = colour ; 
 		this.description = desc ; 
+	}
+	
+	public Apple(int weight) {
+		this.weight = weight ; 
+	}
+	
+	public Apple(int weight, String desc) {
+		this.weight = weight ; 
+		this.description = desc; 
 	}
 
 	public int getWeight() {

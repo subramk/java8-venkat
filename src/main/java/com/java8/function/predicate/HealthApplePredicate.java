@@ -2,7 +2,7 @@ package com.java8.function.predicate;
 
 import java.util.function.Predicate;
 
-import com.java8.function.examples.Apple;
+import java8.in.action.Apple;
 
 public class HealthApplePredicate implements Predicate<Apple> {
 

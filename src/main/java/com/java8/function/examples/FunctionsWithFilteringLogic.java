@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import com.java8.function.predicate.HealthApplePredicate;
 import com.java8.function.predicate.HeavyApplePredicate;
 
+import java8.in.action.Apple;
+
 public class FunctionsWithFilteringLogic {
 
 	public static void main(String[] args) {

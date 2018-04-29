@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.java8.function.examples.Apple;
+import java8.in.action.Apple;
 
 public class ComparatorsExample {
 	public static void main(String[] args) {
