@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java8.in.action.chapter10.Car;
-import java8.in.action.chapter10.Insurance;
-import java8.in.action.chapter10.Person;
+import com.java8.dto.Car;
+import com.java8.dto.Insurance;
+import com.stl.java8.examples.Person;
 
 public class OptionalUsage_2 {
 	
@@ -48,7 +48,7 @@ public class OptionalUsage_2 {
 	@Test
 	public void test_when_using_Optional_on_a_chain_Of_Objects() {
 		Person person = new Person();
-		Car car = new Car();
+		Car car = new Car("skoda");
 		
 		Optional<Car>  optCar = Optional.ofNullable(car);
 		person.setCar(optCar);
@@ -79,7 +79,7 @@ public class OptionalUsage_2 {
 	}
 	
 	public Car defaultCar() {
-		return new Car();
+		return new Car("rover");
 	}
 	
 	public Optional<Insurance> nullSafeFindCheapestInsurance(final Optional<Person> person, final Optional<Car> car) {

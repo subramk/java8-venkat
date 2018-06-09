@@ -1,6 +1,4 @@
-package java8.mooc.assignment.lesson.two;
-
-import static org.junit.Assert.assertTrue;
+package com.java8.in.action.Optionals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +9,6 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
 
 /**
  * 
@@ -38,7 +35,7 @@ public class OptionalExample {
 		        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot","Gorilla","Horse","Inkbottle", "alpha");
 		
 		Stream<String>  distinctStream = list.stream().distinct();
-		Assert.assertTrue(distinctStream.count() == 9);
+		// assert.assertTrue(distinctStream.coun);
 	}
 	
 	@Test
@@ -56,7 +53,7 @@ public class OptionalExample {
 		
 		if(!topName.isPresent()){
 			System.out.println("list is empty");
-			Assert.assertTrue(topName.isPresent() == Boolean.FALSE);
+			//Assert.assertTrue(topName.isPresent() == Boolean.FALSE);
 		}
 	}
 	
@@ -71,10 +68,7 @@ public class OptionalExample {
 		
 	}
 	
-	 public static void main(String[] args) {
-		  runExercises(); 
-		  
-	}
+
 	 
 	 
 	 

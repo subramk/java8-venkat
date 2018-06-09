@@ -1,0 +1,23 @@
+Tips 
+
+
+https://www.youtube.com/watch?v=bG3VvAUlfL8&t=146s
+
+1) nested if conditions can be avoided by using Optional 
+ - if your DTO cannot have optional , we can still use optional in the navigation as follows 
+ 
+ String cityName = Optional.ofNullable(employee)
+ 							.map(Employee::getAddress)
+ 							.map(Address:getCity)
+ 							.map(City::getName)
+ 							.orElse(null); 
+ 							// can be orElseThrow("..some Exception")
+
+
+2) Returning first nonNull value in a sequence of values - use CommonsLang method firstNonNull ; 
+
+
+ 
+ 
+ ObjectUtils.firstNonNull(values); 
+ 

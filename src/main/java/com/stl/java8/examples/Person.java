@@ -1,13 +1,26 @@
 package com.stl.java8.examples;
 
+import java.util.Optional;
+
+import com.java8.dto.Car;
+
 public class Person {
 	
 	private String name ; 
 	private int age ; 
+	private Optional<Car> car ; 
+	
+	
+	
 	
 	public Person(String name , int age ) {
 		this.name = name ; 
 		this.age = age ; 
+	}
+	
+	// default
+	public Person() {
+		
 	}
 	
 	
@@ -39,6 +52,14 @@ public class Person {
 	@Override
 	public String toString() {
 		return String.format("(%s - %d)" , name , age );
+	}
+
+	public Optional<Car> getCar() {
+		return car;
+	}
+
+	public void setCar(Optional<Car> car) {
+		this.car = car;
 	}
 
 }
