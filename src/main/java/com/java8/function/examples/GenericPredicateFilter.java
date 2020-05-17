@@ -19,8 +19,8 @@ public class GenericPredicateFilter {
 	// List<T> - this is the return type 
 	// 
 	
-	public  <T extends Collection<T>> List<T> genericFilter( Collection<T> listOfItems,  Predicate<T> predicate){
-	
+	public  <T extends Collection<T>> List<T> genericFilter( final Collection<T> listOfItems,  final Predicate<T> predicate){
+		
 		if(Objects.nonNull(listOfItems)) {
 			return listOfItems.stream()
 							  .filter( x -> predicate.test(x))
