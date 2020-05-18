@@ -7,7 +7,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 
 /**
@@ -30,7 +31,7 @@ public class OptionalExample {
 	}
 	
 	@Test
-	public  void usingDistintOnStreams(){
+	  void usingDistintOnStreams(){
 		List<String> list = Arrays.asList(
 		        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot","Gorilla","Horse","Inkbottle", "alpha");
 		
@@ -39,7 +40,7 @@ public class OptionalExample {
 	}
 	
 	@Test
-	public void usingOptional(){
+	 void usingOptional(){
 		List<String> list = Arrays.asList(
 		        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot","Gorilla","Horse","Inkbottle");
 		
@@ -61,7 +62,7 @@ public class OptionalExample {
 	@Test
 	// Flattenning out 2 or more collections into  a single one 
 	
-	public void usingFlatMaps(){
+	 void usingFlatMaps(){
 	
 		
 		

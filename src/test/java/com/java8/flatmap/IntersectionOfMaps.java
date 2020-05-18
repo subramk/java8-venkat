@@ -1,18 +1,16 @@
 package com.java8.flatmap;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toSet;
-import static junit.framework.TestCase.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toSet;
+import static junit.framework.TestCase.assertTrue;
 
 /***
  *                      Problem Statement
@@ -26,8 +24,8 @@ public class IntersectionOfMaps {
   private Map<Integer,String>  mapA = new HashMap();
   private Map<Integer,String>  mapB = new HashMap();
 
-  @Before
-  public void setupData(){
+  @BeforeEach
+   void setupData(){
     mapA.put(1,"a");
     mapA.put(2,"b");
     mapA.put(3,"c");
@@ -43,7 +41,7 @@ public class IntersectionOfMaps {
   // In above example , result will be 5,7
 
   @Test
-  public void  testUsingStreamsApi_Solution_One() {
+   void testUsingStreamsApi_Solution_One() {
 
     /*
       for every Key in Map B
@@ -70,7 +68,7 @@ public class IntersectionOfMaps {
   // Neater solution than Solution 1 , but it is still O(N) squared time becuase , when we do a mapA.values().contains() on line  85,it does a linear search of ALL  the values of mapA with a single
   // value of map B - and this gets repeated for all the elements in Map B .
 
-  public void  testUsingStreamsApi_Solution_Two() {
+   void testUsingStreamsApi_Solution_Two() {
 
 
     Set<Integer> keysInMapB = mapB.entrySet()
@@ -88,7 +86,7 @@ public class IntersectionOfMaps {
 
   @Test
   // Optmized solution - extract all the values of Map A into a Set and then use it . This will move the operation from O(N squared) time to O(N) linear  time.
-  public void  testOptimizedUsingStreamsApi_Solution_Three() {
+   void testOptimizedUsingStreamsApi_Solution_Three() {
 
     final Set<Integer> mapA_Values = new HashSet(mapA.values());
 
@@ -106,7 +104,7 @@ public class IntersectionOfMaps {
 
   @Test
   // Best solution is not using Streams but the .retainAll method in maps which is used in Intersection of Maps .
-  public void test_Solution_Using_RetainAll_in_Maps() {
+   void test_Solution_Using_RetainAll_in_Maps() {
 
     final Set<Integer> mapA_Values = new HashSet(mapA.values());
     final Map<Integer,String> mapB_copy = new HashMap<>(mapB);

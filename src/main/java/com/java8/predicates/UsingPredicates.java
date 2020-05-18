@@ -88,7 +88,7 @@ public class UsingPredicates {
 	
 	// Input STring , return Predicate<String> 	
 	final Function<String, Predicate<String>> startsWithLetter = 	(String letter) -> {
-			Predicate<String> checkStartsWith = 	(String name) -> name.startsWith(letter);
+			Predicate<String> checkStartsWith = 	 name -> name.startsWith(letter);
 			return checkStartsWith;
 			};
 	

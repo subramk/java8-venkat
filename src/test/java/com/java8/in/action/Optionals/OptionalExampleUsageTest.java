@@ -3,7 +3,8 @@ import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import static  org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -21,13 +22,13 @@ public class OptionalExampleUsageTest {
 	private Optional<Car> optCar ; 
 	private Optional<Insurance> optInsurance;
 	
-	@Before
+	@BeforeEach
 	public void initializeTest() {
 		
 	}
 	
 	@Test
-	public void testAssertions() { 
+	 void testAssertions() {
 	
 		 person = new Person();
 		 person.setAge(23);
@@ -75,7 +76,7 @@ public class OptionalExampleUsageTest {
 	 }
 	
 	@Test 
-	public void test_AbsenceOfValue_in_Optional_with_ofNullable() {
+	 void test_AbsenceOfValue_in_Optional_with_ofNullable() {
 		
 		 Car car2 = null; 
 		 Optional<Car> emptyCar = Optional.ofNullable(car2) ; 
@@ -91,7 +92,7 @@ public class OptionalExampleUsageTest {
 	}
 	
 	@Test
-	public void test_ifPresent_method() {
+	 void test_ifPresent_method() {
 		Car skoda = new Car("SkodaOctavia");
 		Optional<Car> emptyCar = Optional.ofNullable(skoda) ;
 		
@@ -114,7 +115,7 @@ public class OptionalExampleUsageTest {
 	}
 	
 	@Test
-	public void test_That_Calling_NullablePerson_will_Not_Throw_Exception() {
+	 void test_That_Calling_NullablePerson_will_Not_Throw_Exception() {
 		
 		try {
 			Person p = null; 

@@ -8,18 +8,15 @@ import static org.junit.Assert.assertFalse;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.temporal.TemporalUnit;
-import java.util.Locale;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class DateTester {
 
   @Test
-  public void when_Input_Date_Is_Today_Then_XXXXXX() {
+   void when_Input_Date_Is_Today_Then_XXXXXX() {
 
     LocalDate inputDateToday = LocalDate.now();
 
@@ -41,7 +38,7 @@ public class DateTester {
   }
 
   @Test
-  public void when_Input_Date_Is_Date_in_The_Past_Then_XXXXXX() {
+   void when_Input_Date_Is_Date_in_The_Past_Then_XXXXXX() {
 
     LocalDate dateInThePast = LocalDate.now().minusDays(40) ;
 
@@ -56,7 +53,7 @@ public class DateTester {
   }
 
   @Test
-  public void when_Input_Date_Is_Date_in_The_Future_Then_XXXXXX() {
+   void when_Input_Date_Is_Date_in_The_Future_Then_XXXXXX() {
 
     LocalDate dateInTheFuture  = LocalDate.now().plusDays(75) ;
 
