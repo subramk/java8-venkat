@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import static org.junit.Assert.*;
 
 
 public class FlatMapTest {
 	
 	@Test
-    public void flatMap() {
+     void flatMap() {
         
 		List<Developer> team = new ArrayList<>();
         

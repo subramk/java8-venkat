@@ -12,16 +12,16 @@ import com.java8.dto.Insurance;
 import com.stl.java8.examples.Person;
 
 public class OptionalUsage_2 {
-	
+
 	@Test(expected = NoSuchElementException.class)
 	public void using_Optional_With_Creation() {
-		
+
 		Optional<Car> optCar = Optional.empty();
-		
+
 		Car carObject  = optCar.get();
 		Assert.assertNull(carObject);
 	}
-	
+
 	@Test
 	public void using_Optional_With_FlatMap() {
 		
