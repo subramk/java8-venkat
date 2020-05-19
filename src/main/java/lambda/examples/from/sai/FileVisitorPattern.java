@@ -1,11 +1,11 @@
-package lambda1.examples.from.sai;
+package lambda.examples.from.sai;
 
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class JollyDhaan {
+public class FileVisitorPattern {
     public static void main(String[] args) throws Exception {
         // @Kasi You should change it to yours.
         String myLocalMavenRepoDir = "/Users/Admin/mvn_repo/repository";

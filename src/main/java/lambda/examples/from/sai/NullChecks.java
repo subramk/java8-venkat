@@ -1,8 +1,7 @@
-package lambda1.examples.from.sai;
+package lambda.examples.from.sai;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 class Fruit {
 	private final String name;

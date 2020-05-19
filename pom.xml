@@ -19,11 +19,6 @@
         <java.version>1.8</java.version>
     </properties>
 
-
-
-<!--  <dependencies>-->
-
-     <!-- https://mvnrepository.com/artifact/junit/junit -->
 <dependencyManagement>
     <dependencies>
       <dependency>
@@ -135,7 +130,7 @@
         </dependency>
    </dependencies>
    <build>
-    	<plugins>
+       <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -145,11 +140,31 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+
+       <!-- Required for JUnit 5 Tests to run as well as older JUnit 4 tests as well  -->
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-surefire-plugin</artifactId>
+           <configuration>
+               <includes>
+                   <include>**/*.java</include>
+               </includes>
+           </configuration>
+           <version>2.21.0</version>
+           <dependencies>
+               <dependency>
+                   <groupId>org.junit.platform</groupId>
+                   <artifactId>junit-platform-surefire-provider</artifactId>
+                   <version>1.2.0-M1</version>
+               </dependency>
+               <dependency>
+                   <groupId>org.junit.jupiter</groupId>
+                   <artifactId>junit-jupiter-engine</artifactId>
+                   <version>5.2.0-M1</version>
+               </dependency>
+           </dependencies>
+       </plugin>
         </plugins>
 
   </build>
-
-
-
-
 </project>

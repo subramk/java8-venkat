@@ -1,4 +1,4 @@
-package lambda1.examples.from.sai;
+package lambda.examples.from.sai;
 
 import java.util.stream.IntStream;
 

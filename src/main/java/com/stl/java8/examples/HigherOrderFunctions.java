@@ -45,7 +45,7 @@ public class HigherOrderFunctions {
 							.forEach(System.out::println); // print the String. 
 			
 			// using BinaryOperator , note here that the two parameters of the reduce method get passed into the lambda very differently . 
-			// ie the first parameter 'carry' gets used as a target (ie carry.xxx ) while the second parameter of 'str' gets used as a parameter. 
+			// ie the first parameter 'carry' gets used as a target (ie carry.xxx ) while the second parameter of 'str' gets used as a parameter.
 			System.out.println(
 					numbers.stream()
 					.map(String::valueOf)
