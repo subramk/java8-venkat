@@ -2,7 +2,7 @@ package com.java8.Predicates;
 
 import java.util.function.Function;
 
-public class FunctionExample1 {
+public class FunctionsBasic {
 	
 	private Function<Integer,Integer> add = x -> x + 1 ; 
 	private Function<Integer,Integer> doubleTheNumber  =  x -> x*2 ; 
@@ -10,7 +10,7 @@ public class FunctionExample1 {
 	
 	
 	public static void main() {
-		FunctionExample1 tester = new FunctionExample1(); 
+		FunctionsBasic tester = new FunctionsBasic();
 		
 		tester.runExamples();
 		

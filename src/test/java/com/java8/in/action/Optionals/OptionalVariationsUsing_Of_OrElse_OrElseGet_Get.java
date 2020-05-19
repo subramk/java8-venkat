@@ -1,4 +1,4 @@
-package com.java8.optional.example;
+package com.java8.in.action.Optionals;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +31,7 @@ import org.junit.Test;
  * @author Admin
  *
  */
-public class OptionalUsageTest {
+public class OptionalVariationsUsing_Of_OrElse_OrElseGet_Get {
 	
 	public String getMyDefault() {
 	    System.out.println("Inside the getMyDefault() method");

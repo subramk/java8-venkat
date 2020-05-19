@@ -1,4 +1,4 @@
-package com.java8.optional.example;
+package com.java8.in.action.Optionals;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -11,8 +11,8 @@ import com.java8.dto.Car;
 import com.java8.dto.Insurance;
 import com.stl.java8.examples.Person;
 
-public class OptionalUsage_2 {
-
+public class OptionalUsages {
+	
 	@Test(expected = NoSuchElementException.class)
 	public void using_Optional_With_Creation() {
 

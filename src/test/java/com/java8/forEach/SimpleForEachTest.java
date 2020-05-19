@@ -1,9 +1,8 @@
-package com.stl.forEach;
+package com.java8.forEach;
 
 import java.util.function.Function;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.stl.java8.examples.SimpleForEach;
@@ -13,7 +12,7 @@ public class SimpleForEachTest {
 	
 	private SimpleForEach simpleForEach;
 	
-	private Function<Integer,Integer> add = x -> x + 1 ; 
+	private Function<Integer,Integer> incrementByOne = x -> x + 1 ;
 	private Function<Integer,Integer> doubleTheNumber  =  x -> x*2 ; 
 	private Function<Integer,Integer> halveTheNumber = (Integer x ) ->  { return x/2;} ; 
 	
@@ -32,7 +31,7 @@ public class SimpleForEachTest {
 	
 	@Test
 	public void testAddOperations() {
-		Assert.assertTrue(add.apply(2).equals(3));
+		Assert.assertTrue(incrementByOne.apply(2).equals(3));
 		
 		Assert.assertTrue(doubleTheNumber.apply(5).equals(10));
 		Assert.assertTrue(halveTheNumber.apply(100).equals(50));

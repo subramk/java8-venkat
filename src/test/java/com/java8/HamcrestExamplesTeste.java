@@ -1,4 +1,4 @@
-package com.stl.hamcrest.matchers;
+package com.java8;
 
 import java.util.HashMap;
 import java.util.Map;

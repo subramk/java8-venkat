@@ -48,7 +48,7 @@ public class OptionalExample {
 
 		Function<String,String> mapper = n -> n.toUpperCase();
 		
-		Optional<String> topName  = list2.stream().map(mapper).findFirst();
+		Optional<String> topName  = list.stream().map(mapper).findFirst();
 		
 		System.out.println("first elemet in the list is " +  topName);
 		
@@ -57,20 +57,8 @@ public class OptionalExample {
 			//Assert.assertTrue(topName.isPresent() == Boolean.FALSE);
 		}
 	}
-	
-	
-	@Test
-	// Flattenning out 2 or more collections into  a single one 
-	
-	 void usingFlatMaps(){
-	
-		
-		
-		
-	}
+
+}
 	
 
-	 
-	 
-	 
-}
+
