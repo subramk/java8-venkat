@@ -17,6 +17,7 @@
         <rider-junit5.version>1.7.3</rider-junit5.version>
         <mockito.version>3.1.0</mockito.version>
         <java.version>1.8</java.version>
+        <truth.version>0.34</truth.version>
     </properties>
 
 <dependencyManagement>
@@ -52,6 +53,12 @@
           <artifactId>mockito-core</artifactId>
           <version>${mockito.version}</version>
       </dependency>
+        <dependency>
+            <groupId>com.google.truth</groupId>
+            <artifactId>truth</artifactId>
+            <version>${truth.version}</version>
+            <scope>test</scope>
+        </dependency>
       <dependency>
           <groupId>org.mockito</groupId>
           <artifactId>mockito-junit-jupiter</artifactId>
@@ -84,6 +91,11 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.truth</groupId>
+            <artifactId>truth</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
