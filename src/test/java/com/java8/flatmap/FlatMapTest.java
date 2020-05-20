@@ -8,44 +8,68 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import static org.junit.Assert.*;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class FlatMapTest {
-	
-	@Test
-     void flatMap() {
-        
-		List<Developer> team = new ArrayList<>();
-        
-        Developer polyglot = new Developer("esoteric");
+    private List<Developer> developers = new ArrayList<>();
+    private  Developer polyglot;
+    private Developer fullStack;
+
+    @BeforeEach void setUp() {
+
+        polyglot = new Developer("esoteric");
         polyglot.add("clojure");
         polyglot.add("scala");
         polyglot.add("groovy");
         polyglot.add("go");
         polyglot.add("java");
-        
-        Developer busy = new Developer("pragmatic");
-        busy.add("java");
-        busy.add("javascript");
 
-        team.add(polyglot);
-        team.add(busy);
+        fullStack = new Developer("pragmatic");
+        fullStack.add("java");
+        fullStack.add("javascript");
 
-        List<String> teamLanguages = team	.stream()
-        									.map(d -> d.getLanguages())
-        									.flatMap(l -> l.stream())
-        									.distinct() // required after we flatten all the languages and then remove duplicates 
+        developers.add(polyglot);
+        developers.add(fullStack);
+    }
+	
+	@Test
+     void flatMapListWithDuplicates() {
+
+
+        List<String> developerRoles = developers	.stream()
+                .flatMap(dev -> dev.getLanguages().stream())
         									.collect(Collectors.toList());
         
-        teamLanguages.forEach(n -> System.out.println(n));
-             
-        
-        assertTrue(teamLanguages.containsAll(polyglot.getLanguages()));
-        assertTrue(teamLanguages.containsAll(busy.getLanguages()));
+        developerRoles.forEach(n -> System.out.println(n));
+
+        assertTrue(developerRoles.containsAll(polyglot.getLanguages()));
+        assertTrue(developerRoles.containsAll(fullStack.getLanguages()));
+        // without removing duplicate
+        assertThat(developerRoles.size()).isEqualTo(polyglot.getLanguages().size()+fullStack.getLanguages().size());
     
 	
 	}
+
+    @Test
+    void flatMapSetWithoutDuplicates() {
+
+
+        Set<String> developerRoles = developers	.stream()
+                .flatMap(dev -> dev.getLanguages().stream())
+                .collect(Collectors.toSet());
+
+        developerRoles.forEach(n -> System.out.println(n));
+
+        assertThat(6).isEqualTo(developerRoles.size());
+
+
+        assertTrue(developerRoles.containsAll(polyglot.getLanguages()));
+        assertTrue(developerRoles.containsAll(fullStack.getLanguages()));
+
+
+    }
 	
 
 class Developer {
