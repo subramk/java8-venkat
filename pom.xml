@@ -18,6 +18,7 @@
         <mockito.version>3.1.0</mockito.version>
         <java.version>1.8</java.version>
         <truth.version>0.34</truth.version>
+        <version.guava>29.0-jre</version.guava>
     </properties>
 
 <dependencyManagement>
@@ -74,16 +75,22 @@
 			    <artifactId>commons-lang3</artifactId>
 			    <version>3.0</version>
 		</dependency>
+        <!--
 		<dependency>
    		 	<groupId>com.google.collections</groupId>
     			<artifactId>google-collections</artifactId>
     			<version>1.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 		    <groupId>joda-time</groupId>
 		    <artifactId>joda-time</artifactId>
 		    <version>2.1</version>
 		</dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${version.guava}</version>
+        </dependency>
    </dependencies>
  </dependencyManagement>
 
@@ -136,12 +143,32 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <dependency>
+       <!-- <dependency>
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
+        </dependency> -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
    </dependencies>
    <build>
+       <resources>
+           <resource>
+               <directory>${project.basedir}/src/main/resources</directory>
+               <filtering>true</filtering>
+           </resource>
+       </resources>
+       <testResources>
+           <testResource>
+               <directory>${project.basedir}/src/main/resources</directory>
+               <filtering>true</filtering>
+           </testResource>
+           <testResource>
+               <directory>${project.basedir}/src/test/java/resources</directory>
+               <filtering>true</filtering>
+           </testResource>
+       </testResources>
        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
