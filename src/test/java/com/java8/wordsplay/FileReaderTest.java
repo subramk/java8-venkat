@@ -83,7 +83,7 @@ public class FileReaderTest {
 //        - row​: 2
 //                - car​: 1
 //                - die​:
-       String words =  "ant boat row ant car ant die ant boat row ant"  ;
+       String words =  "zan zan zan zan zan zan zan zan ant boat row ant car ant die ant boat row ant zan zan"  ;
 
         String[] wordsArray = words.split(" ");
         List<String> wordList = Arrays.asList(wordsArray);
@@ -97,7 +97,7 @@ public class FileReaderTest {
                         )
                 )
                .entrySet()
-                .stream()
+               .stream()
                 . sorted( comparing(Entry::getKey)).collect(toList());
 
         wordMap.forEach( entry1 -> System.out.println(entry1.getKey() + " " + entry1.getValue()));
