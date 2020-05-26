@@ -1,6 +1,5 @@
 package com.java8.wordsplay;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import java8.in.action.chapter5.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +12,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -88,6 +91,10 @@ public class FileReaderTest {
 //        - row​: 2
 //                - car​: 1
 //                - die​:
+       String words =  "ant boat row ant car ant die ant boat row ant"  ;
+
+        String[] wordsArray = words.split(" ");
+        List<String> wordList = Arrays.asList(wordsArray);
 
 
         List<Entry<String, Long>> wordMap =
