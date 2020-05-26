@@ -1,5 +1,6 @@
 package com.java8.wordsplay;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import java8.in.action.chapter5.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,10 +12,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,9 +33,16 @@ public class FileReaderTest {
 
     private Path path;
 
+    private List<String> wordList;
+
     @BeforeEach
     void setUp()  {
         path =   Paths.get("src/test/resources", "samples/mcdonalds-new.csv");
+
+        String words =  "zan zan zan zan zan zan zan zan ant boat row ant car ant die ant boat row ant zan zan"  ;
+
+        String[] wordsArray = words.split(" ");
+        wordList = Arrays.asList(wordsArray);
 
     }
 
@@ -83,10 +88,7 @@ public class FileReaderTest {
 //        - row​: 2
 //                - car​: 1
 //                - die​:
-       String words =  "zan zan zan zan zan zan zan zan ant boat row ant car ant die ant boat row ant zan zan"  ;
 
-        String[] wordsArray = words.split(" ");
-        List<String> wordList = Arrays.asList(wordsArray);
 
         List<Entry<String, Long>> wordMap =
         wordList.stream()
@@ -104,5 +106,21 @@ public class FileReaderTest {
 
     }
 
+    @Test
+    void shouldReturnWithNaturalOrder()  throws Exception {
+
+        Map<String, Long> wordMap =
+                wordList.stream()
+                        .collect(
+                                groupingBy(
+                                        (word -> word),
+                                        // creating natural order tree map dynamically
+                                        () -> new TreeMap<String, Long>(Comparator.naturalOrder()),
+                                        Collectors.counting()
+                                )
+                        );
+
+        wordMap.forEach((key, value) -> System.out.println(key + " " + value));
     }
+}
 
