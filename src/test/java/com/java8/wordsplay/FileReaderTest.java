@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -35,9 +36,16 @@ public class FileReaderTest {
 
     private Path path;
 
+    private List<String> wordList;
+
     @BeforeEach
     void setUp()  {
         path =   Paths.get("src/test/resources", "samples/mcdonalds-new.csv");
+
+        String words =  "zan zan zan zan zan zan zan zan ant boat row ant car ant die ant boat row ant zan zan"  ;
+
+        String[] wordsArray = words.split(" ");
+        wordList = Arrays.asList(wordsArray);
 
     }
 
@@ -88,6 +96,7 @@ public class FileReaderTest {
         String[] wordsArray = words.split(" ");
         List<String> wordList = Arrays.asList(wordsArray);
 
+
         List<Entry<String, Long>> wordMap =
         wordList.stream()
                 .collect(
@@ -97,12 +106,28 @@ public class FileReaderTest {
                         )
                 )
                .entrySet()
-                .stream()
+               .stream()
                 . sorted( comparing(Entry::getKey)).collect(toList());
 
         wordMap.forEach( entry1 -> System.out.println(entry1.getKey() + " " + entry1.getValue()));
 
     }
 
+    @Test
+    void shouldReturnWithNaturalOrder()  throws Exception {
+
+        Map<String, Long> wordMap =
+                wordList.stream()
+                        .collect(
+                                groupingBy(
+                                        (word -> word),
+                                        // creating natural order tree map dynamically
+                                        () -> new TreeMap<String, Long>(Comparator.naturalOrder()),
+                                        Collectors.counting()
+                                )
+                        );
+
+        wordMap.forEach((key, value) -> System.out.println(key + " " + value));
     }
+}
 
