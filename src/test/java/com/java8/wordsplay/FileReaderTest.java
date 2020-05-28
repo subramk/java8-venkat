@@ -42,7 +42,7 @@ public class FileReaderTest {
     void setUp()  {
         path =   Paths.get("src/test/resources", "samples/mcdonalds-new.csv");
 
-        String words =  "zan zan zan zan zan zan zan zan ant boat row ant car ant die ant boat row ant zan zan"  ;
+        String words =  "boat ant row ant car ant die ant boat row ant zan zan zan zan zan zan zan zan zan zan"  ;
 
         String[] wordsArray = words.split(" ");
         wordList = Arrays.asList(wordsArray);
