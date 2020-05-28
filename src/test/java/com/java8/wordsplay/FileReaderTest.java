@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,7 +48,7 @@ public class FileReaderTest {
     void setUp()  {
         path =   Paths.get("src/test/resources", "samples/mcdonalds-new.csv");
 
-        String words =  "zan zan zan zan zan zan zan zan ant boat row ant car ant die ant boat row ant zan zan"  ;
+        String words =  "boat ant row ant car ant die ant boat row ant zan zan zan zan zan zan zan zan zan zan"  ;
 
         String[] wordsArray = words.split(" ");
         wordList = Arrays.asList(wordsArray);
@@ -121,9 +122,59 @@ public class FileReaderTest {
     @Test
     void shouldReturnWithNaturalOrder()  throws Exception {
         final Supplier<TreeMap<String,Long>> naturalOrdering = () -> new TreeMap<String, Long>(Comparator.naturalOrder());
+        Map<String, Long> wordMap =
+                wordList.stream()
+                        .collect(
+                                groupingBy(
+                                        (word -> word),
+                                        // creating natural order tree map dynamically
+                                        naturalOrdering,
+                                        Collectors.counting()
+                                )
+                        );
+
+        wordMap.forEach((key, value) -> System.out.println(key + " " + value));
+    }
+
+
+    @Test
+    void shouldRedturnWithNaturalOrder()  throws Exception {
+        final Supplier<TreeMap<String,Long>> naturalOrdering = () -> new TreeMap<String, Long>(Comparator.naturalOrder());
 
         Map<String, Long> wordMapNaturalOrdering = getWordListComparingBy(naturalOrdering);
         wordMapNaturalOrdering.forEach((key, value) -> System.out.println(key + " " + value));
+    }
+
+    @Test
+    void shouldReturnReverseOrder()  throws Exception {
+        final Supplier<TreeMap<String,Long>> reverseOrder = () -> new TreeMap<String, Long>(Comparator.reverseOrder());
+
+        Map<String, Long> wordMapReverseOrdering = getWordListComparingBy(reverseOrder);
+        wordMapReverseOrdering.forEach((key, value) -> System.out.println(key + " " + value));
+    }
+
+
+    private TreeMap<String, Long> getWordListComparingBy(final Supplier<TreeMap<String, Long>> orderingSupplier) {
+        return wordList.stream()
+                .collect(
+                        groupingBy(
+                                (word -> word),
+                                orderingSupplier,
+                                counting()
+                        )
+                );
+    }
+
+    //TODO : Unit Test pending for Optional<Supplier<TreeMap<String, Long>>>
+    private TreeMap<String, Long> getWordListWithOptionalComparingBy(final Optional<Supplier<TreeMap<String, Long>>> orderingSupplier) {
+        return wordList.stream()
+                .collect(
+                        groupingBy(
+                                (word -> word),
+                                orderingSupplier.get(),
+                                counting()
+                        )
+                );
     }
 
     @Test
