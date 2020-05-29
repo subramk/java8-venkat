@@ -157,6 +157,7 @@ public class FileReaderTest {
 
 
     //TODO : Unit Test pending for Optional<Supplier<TreeMap<String, Long>>>
+    // TODO Avoid using Optional as method parameters and in Collections  : See https://www.youtube.com/watch?v=fBYhtvY19xA 32:54 minute . Stuart Marks
     private TreeMap<String, Long> getWordListWithOptionalComparingBy(final Optional<Supplier<TreeMap<String, Long>>> orderingSupplier) {
         return wordList.stream()
                 .collect(
