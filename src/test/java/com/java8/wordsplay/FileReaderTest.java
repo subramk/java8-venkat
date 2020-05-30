@@ -122,6 +122,7 @@ public class FileReaderTest {
     @Test
     void shouldReturnWithNaturalOrder()  throws Exception {
         final Supplier<TreeMap<String,Long>> naturalOrdering = () -> new TreeMap<String, Long>(Comparator.naturalOrder());
+
         Map<String, Long> wordMap =
                 wordList.stream()
                         .collect(
@@ -143,38 +144,6 @@ public class FileReaderTest {
 
         Map<String, Long> wordMapNaturalOrdering = getWordListComparingBy(naturalOrdering);
         wordMapNaturalOrdering.forEach((key, value) -> System.out.println(key + " " + value));
-    }
-
-    @Test
-    void shouldReturnReverseOrder()  throws Exception {
-        final Supplier<TreeMap<String,Long>> reverseOrder = () -> new TreeMap<String, Long>(Comparator.reverseOrder());
-
-        Map<String, Long> wordMapReverseOrdering = getWordListComparingBy(reverseOrder);
-        wordMapReverseOrdering.forEach((key, value) -> System.out.println(key + " " + value));
-    }
-
-
-    private TreeMap<String, Long> getWordListComparingBy(final Supplier<TreeMap<String, Long>> orderingSupplier) {
-        return wordList.stream()
-                .collect(
-                        groupingBy(
-                                (word -> word),
-                                orderingSupplier,
-                                counting()
-                        )
-                );
-    }
-
-    //TODO : Unit Test pending for Optional<Supplier<TreeMap<String, Long>>>
-    private TreeMap<String, Long> getWordListWithOptionalComparingBy(final Optional<Supplier<TreeMap<String, Long>>> orderingSupplier) {
-        return wordList.stream()
-                .collect(
-                        groupingBy(
-                                (word -> word),
-                                orderingSupplier.get(),
-                                counting()
-                        )
-                );
     }
 
 
