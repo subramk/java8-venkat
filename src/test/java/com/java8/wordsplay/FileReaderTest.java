@@ -1,6 +1,5 @@
 package com.java8.wordsplay;
 
-import java8.in.action.chapter5.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.McDonald;
