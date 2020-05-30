@@ -16,10 +16,7 @@ public class FunctionsBasic {
 		
 	}
 	private void runExamples() {
-	 
-		System.out.println(" Add operation on Integer 89 " + add.apply(89 )) ;
-		
-		
+	 		System.out.println(" Add operation on Integer 89 " + add.apply(89 )) ;
 	}
 	
 
