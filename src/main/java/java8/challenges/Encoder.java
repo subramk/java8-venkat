@@ -4,6 +4,7 @@ package java8.challenges;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -38,7 +39,7 @@ public interface Encoder {
     static Map<Character, Long> getCharacterLongMap(List<Character> charList) {
       return charList.stream().collect(
               groupingBy(
-                      (character -> character),
+                      (Function.identity()), // same as  character -> character
                       // for maintaining the same order as passed in
                       () -> new LinkedHashMap<>(),
                       Collectors.counting()
