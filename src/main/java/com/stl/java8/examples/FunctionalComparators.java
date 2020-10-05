@@ -14,7 +14,8 @@ public class FunctionalComparators {
 	
 	private static List<Person> personsList = new ArrayList<Person>(); 
 	
-	private Comparator<Person> personAgeAscendingComparator = (person1, person2) -> person1.ageDifference(person2); 
+	private Comparator<Person> personAgeAscendingComparator = (person1, person2) -> person1.ageDifference(person2);
+
 	private Comparator<Person> personDescendingComparator = personAgeAscendingComparator.reversed() ; 
 	
 	// Passing Functions into Comparators so that multiple comparators can be chained to form a sequence of comparisons. 

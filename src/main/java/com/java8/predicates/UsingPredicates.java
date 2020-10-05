@@ -2,9 +2,13 @@ package com.java8.predicates;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import com.java8.Gender;
+import com.java8.dto.Actor;
 
 /**
  * 
@@ -32,10 +36,50 @@ public class UsingPredicates {
 	final static List<String> friends =  Arrays.asList("Brian", "Nate", "Neal", "Raju", "Sara", "Scott");
 	final static List<String> comrades = Arrays.asList("Kate", "Ken", "Nick", "Paula", "Zach");
 	final static List<String> editors =  Arrays.asList("Brian", "Jackie", "John", "Mike");
-	
+
+	public static final Predicate<String> startingWithLetterN = x -> x.startsWith("N");
+
+	public static final Predicate<Actor> actor  = x -> x.getAge() > 25 ;
+
+	public static final Function<Integer,Integer>  doubleMyNumber = number -> number * 2 ;
+	public static final BiFunction<Integer,Integer,String> numberAsStringbleMyNumber = (x, y ) ->  (x * y + "doubled") ;
+
+
+
+	public static final Predicate<Actor> actorsSuperStar0 = x -> x.getAge() < 25 ;
+	public static final Predicate<Actor> actorRisingStar1 = actorsSuperStar0.and( x -> x.getName().equals("kasi"));
+	public static final Predicate<Actor> actorsSuperStar2 = x -> x.getAge() < 25 ;
+	public static final Predicate<Actor> actorsSuperStar = x -> x.getAge() < 25 ;
+	public static final Predicate<Actor> actorRisingStar4  = actorsSuperStar.and( x -> x.getName().equals("kasi"));
+	public static final Predicate<Actor> actorsSuperStar5 = x -> x.getAge() < 25 ;
+	public static final Predicate<Actor> actorRisingStar6  = actorsSuperStar.and( x -> x.getName().equals("kasi"));
+	public static final Predicate<Actor> actorsSuperStar7 = x -> x.getAge() < 25 ;
+	public static final Predicate<Actor> actorRisingStar8  = actorsSuperStar.and( x -> x.getName().equals("kasi"));
+
+
+
+
+	public void exampleConsumer(List<String> friends) {
+
+		friends
+				.stream()
+				.forEach( x -> System.out.print(x + " ...... "));
+
+	}
+
+
+	public boolean someMethod(final Predicate<Actor> predicate) {
+
+		Actor myActor = new Actor("Satish", 33, Gender.FEMALE);
+		return predicate.test(myActor);
+
+	}
+
+
+
 	final static long  friends_names_startsWith_B = friends
 													.stream()
-													.filter( name -> name.startsWith("N")).count() ; 
+													.filter(startingWithLetterN).count() ;
 	// using Method REference 
 	final static long  friends_names_startsWith_N = friends
 													.stream()
@@ -110,7 +154,12 @@ public class UsingPredicates {
 	}
 	
 	public static void printAllFriends(){
-		System.out.println("Printing using the normal Java 5+ way");
+
+		Actor myActor = new Actor("kasi" ,44, Gender.MALE) ;
+
+		boolean respone = 	actorsSuperStar.test(myActor);
+
+			System.out.println("Printing using the normal Java 5+ way");
 		for(String str : friends){
 			System.out.print(" " +  str + " ");
 		}
