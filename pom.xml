@@ -17,7 +17,7 @@
         <junit-jupiter-params>5.5.2</junit-jupiter-params>
         <rider-junit5.version>1.7.3</rider-junit5.version>
         <mockito.version>3.1.0</mockito.version>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
         <truth.version>0.34</truth.version>
         <version.guava>29.0-jre</version.guava>
     </properties>
