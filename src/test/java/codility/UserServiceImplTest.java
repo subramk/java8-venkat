@@ -46,6 +46,10 @@ public class UserServiceImplTest {
   public void shouldReturnBasicCount() {
     Map<Long,Long>  resultMap = userService.count(userStatsMapArray);
     Assert.assertEquals(resultMap.size(),3);
+
+    resultMap
+      .entrySet()
+      .stream().forEach(x -> System.out.println("key is " + x.getKey() +  " and value is " + x.getValue()));
   }
 
 }

@@ -1,14 +1,15 @@
 package codility;
 
-
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
-import static java.util.Optional.ofNullable;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.math.NumberUtils;
 
 /*
 
@@ -44,45 +45,7 @@ Map<String,UserStats> user5 = new HashMap("1235", new UserStats(170L));
 
 public class UserServiceImpl {
 
-    public static void main(String[] args) {
-
-        UserServiceImpl userServiceMicroservice = new UserServiceImpl();
-
-        Map<String, UserStats> userStatsMap1 = new HashMap();
-        UserStats userStats1 = new UserStats();
-        userStats1.setVisitCount(Optional.of(124L));
-        userStatsMap1.put("1234", userStats1);
-
-        Map<String, UserStats> userStatsMap2 = new HashMap();
-        UserStats userStats2 = new UserStats();
-        userStats2.setVisitCount(Optional.of(125L));
-        userStatsMap2.put("1235", userStats2);
-
-        Map<String, UserStats> userStatsMap3 = new HashMap();
-        UserStats userStats3 = new UserStats();
-        userStats3.setVisitCount(Optional.empty());
-        userStatsMap3.put("1236", userStats3);
-
-        Map<String, UserStats>[] myMaps = (Map<String, UserStats>[]) new HashMap[3];
-        myMaps[0] = userStatsMap1;
-        myMaps[1] = userStatsMap2;
-        myMaps[2] = userStatsMap3;
-
-        Map<Long, Long> finalResult = userServiceMicroservice.count(myMaps);
-        finalResult
-                .entrySet()
-                .stream().forEach(x -> System.out.println("key is " + x.getKey() +  " and value is " + x.getValue()));
-    }
-
-    Predicate<String> isNumeric = x -> {
-        try {
-            Integer.parseInt(x);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-
-    };
+    final Predicate<String> isStringNumeric = input  -> NumberUtils.isNumber(input);
 
     Map<Long, Long> count(final Map<String, UserStats>... visits) {
 
@@ -105,7 +68,7 @@ public class UserServiceImpl {
         Map<String, UserStats> currentMapInstance  = listOfMaps.get(count);
         if(Objects.nonNull(currentMapInstance) && !currentMapInstance.keySet().isEmpty()){
             String key = currentMapInstance.keySet().stream().findAny().get();
-            if(isNumeric.test(key)){
+            if(isStringNumeric.test(key)){
                 UserStats userStats = currentMapInstance.get(key);
                 finalResult.put(Long.valueOf(key), userStats.getVisitCount().orElseGet( () -> 999L));
             }
