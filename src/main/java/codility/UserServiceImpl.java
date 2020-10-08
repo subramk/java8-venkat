@@ -42,36 +42,36 @@ Map<String,UserStats> user5 = new HashMap("1235", new UserStats(170L));
 
 */
 
-public class UserServiceMicroservice {
+public class UserServiceImpl {
 
     public static void main(String[] args) {
 
-        UserServiceMicroservice userServiceMicroservice = new UserServiceMicroservice();
+        UserServiceImpl userServiceMicroservice = new UserServiceImpl();
 
-        Map<String, UserStats> someMap1 = new HashMap();
+        Map<String, UserStats> userStatsMap1 = new HashMap();
         UserStats userStats1 = new UserStats();
         userStats1.setVisitCount(Optional.of(124L));
-        someMap1.put("1234", userStats1);
+        userStatsMap1.put("1234", userStats1);
 
-        Map<String, UserStats> someMap2 = new HashMap();
+        Map<String, UserStats> userStatsMap2 = new HashMap();
         UserStats userStats2 = new UserStats();
         userStats2.setVisitCount(Optional.of(125L));
-        someMap2.put("1235", userStats2);
+        userStatsMap2.put("1235", userStats2);
 
-        Map<String, UserStats> someMap3 = new HashMap();
+        Map<String, UserStats> userStatsMap3 = new HashMap();
         UserStats userStats3 = new UserStats();
         userStats3.setVisitCount(Optional.empty());
-        someMap3.put("1236", userStats3);
+        userStatsMap3.put("1236", userStats3);
 
         Map<String, UserStats>[] myMaps = (Map<String, UserStats>[]) new HashMap[3];
-        myMaps[0] = someMap1;
-        myMaps[1] = someMap2;
-        myMaps[2] = someMap3;
+        myMaps[0] = userStatsMap1;
+        myMaps[1] = userStatsMap2;
+        myMaps[2] = userStatsMap3;
 
         Map<Long, Long> finalResult = userServiceMicroservice.count(myMaps);
         finalResult
                 .entrySet()
-                .stream().forEach(x -> System.out.println("key is " + x.getKey() + "and value is " + x.getValue()));
+                .stream().forEach(x -> System.out.println("key is " + x.getKey() +  " and value is " + x.getValue()));
     }
 
     Predicate<String> isNumeric = x -> {

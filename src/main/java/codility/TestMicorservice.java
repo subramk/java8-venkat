@@ -45,7 +45,7 @@ public class TestMicorservice {
 
     public static void main(String[] args) {
 
-        UserServiceMicroservice userServiceMicroservice = new UserServiceMicroservice();
+        TestMicorservice userServiceMicroservice = new TestMicorservice();
 
         Map<String, UserStats> someMap1 = new HashMap();
         UserStats userStats1 = new UserStats();
@@ -132,7 +132,7 @@ public class TestMicorservice {
 
     }
 
-class UserStats2{
+class UserStatistics {
     private Optional<Long> visitCount;
     public Optional<Long> getVisitCount() {
         return visitCount;
