@@ -5,29 +5,32 @@ import java.util.Optional;
 import com.java8.dto.Car;
 
 public class Person {
-	
-	private String name ; 
-	private int age ; 
-	private Optional<Car> car ; 
-	
-	
-	
-	
+
+	private String name ;
+	private int age ;
+	private Optional<Car> car ;
+
+
+
+
 	public Person(String name , int age ) {
-		this.name = name ; 
-		this.age = age ; 
-	}
-	
-	// default
-	public Person() {
-		
-	}
-	
-	
-	public int ageDifference(Person person ) {
-		return age -  person.age ; 
+		this.name = name ;
+		this.age = age ;
 	}
 
+	// default
+	public Person() {
+
+	}
+
+
+	public int ageDifference(Person person ) {
+		return age -  person.age ;
+	}
+
+	int ageDifferenceStatic(Person person){
+	  return 100 - person.age ;
+  }
 
 	public String getName() {
 		return name;

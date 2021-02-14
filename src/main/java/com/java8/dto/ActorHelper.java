@@ -1,13 +1,7 @@
 package com.java8.dto;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.java8.Gender;
-
-import org.apache.commons.collections4.SetUtils;
 
 public final class ActorHelper {
 

@@ -3,13 +3,16 @@ package lambda.examples.from.sai;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 /**
  * Hello Lambda
- * 
+ *
  * @author Sai
  *
  */
@@ -25,23 +28,21 @@ public class Lambda1 {
 
 		System.out.println("---------------------------------------------");
 
-		
-		
+
+
 		// refinement 1: (using functional interface, but no lambda yet)
 		input.forEach(new Consumer<Integer>() {
 
 			@Override
 			public void accept(Integer n) {
-				System.out.println(n);
+							  System.out.println(n);
 			}
 		});
 		System.out.println("---------------------------------------------");
 
-		
-		
 		// refinement 2: (using lambda with functional interfaces)
 		Consumer<Integer> consumer = n -> System.out.println(n);
-		
+
 		input.forEach(consumer);
 
 		System.out.println("---------------------------------------------");
@@ -83,7 +84,22 @@ public class Lambda1 {
 		// Refinement 2: With functional interfaces and Lambda expressions
 		// visible.
 		Predicate<Integer> filterFunction1 = n -> n % 2 == 0;
-		System.out.println("Filtered List (Using visible functional interfaces and Lambdas): " + input.stream().filter(filterFunction1).collect(Collectors.toList()));
+		Predicate<String> stringShouldBeginWith =  x -> x.startsWith("abc") ;
+
+		Function<Integer,Integer> doubleTheNumber = x -> x * 2 ;
+
+		BiFunction<Integer,Integer,Integer> addTwoNumbersAndIncrementTen = (x, y) -> (x*y+10);
+    BiFunction<Integer,Double,String> addTwoNumbersAndIncrementT = (x, y) -> null;
+
+    int result = addTwoNumbersAndIncrementTen.apply(2,3);
+
+
+		System.out.println("Filtered List (Using visible functional interfaces and Lambdas): " +
+      input
+        .stream()
+        .map(number -> number * 2 ) // java.util.Function  x -> y
+        .filter(filterFunction1)// Predicate
+        .collect(Collectors.toList()));
 
 		System.out.println("---------------------------------------------");
 

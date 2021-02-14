@@ -9,8 +9,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
 /*
 
 Your Architect has designed a User MicroSerivce that will return the userId  and the number
@@ -45,7 +43,7 @@ Map<String,UserStats> user5 = new HashMap("1235", new UserStats(170L));
 
 public class UserServiceImpl {
 
-    final Predicate<String> isStringNumeric = input  -> NumberUtils.isNumber(input);
+    //final Predicate<String> isStringNumeric = input  -> NumberUtils.isNumber(input);
 
     Map<Long, Long> count(final Map<String, UserStats>... visits) {
 
@@ -68,10 +66,10 @@ public class UserServiceImpl {
         Map<String, UserStats> currentMapInstance  = listOfMaps.get(count);
         if(Objects.nonNull(currentMapInstance) && !currentMapInstance.keySet().isEmpty()){
             String key = currentMapInstance.keySet().stream().findAny().get();
-            if(isStringNumeric.test(key)){
+            //if(isStringNumeric.test(key)){
                 UserStats userStats = currentMapInstance.get(key);
                 finalResult.put(Long.valueOf(key), userStats.getVisitCount().orElseGet( () -> 999L));
-            }
+            //}
         }
     }
 }
