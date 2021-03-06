@@ -3,7 +3,6 @@ package challenges;
 import java.io.Serializable;
 import java.util.Objects;
 
-// A simple Customer DTO for poc purpose .. TODO move out to separate class later.
 public class Customer implements Serializable {
   String name;
   int age;
