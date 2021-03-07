@@ -35,12 +35,22 @@ public class FizzBuzzSolutionThree {
     }
 
     protected Map<String, Long> getSummary(List<String> result) {
-        Map<String, Long> summaryMap = result.stream().filter(strOnly-> !isNumeric(strOnly)).collect(groupingBy(
-                (Function.identity()), () -> new LinkedHashMap<>(), counting())) ;
-       Long max = result.stream().filter(FizzBuzzSolutionThree::isNumeric).collect(counting());
-       summaryMap.put("integer", max);
 
-        return summaryMap;
+      final Map<Boolean, List<String>>  partitionByMap = result.stream().collect(partitioningBy(FizzBuzzSolutionThree::isNumeric));
+
+      final Map<String, Long> summaryMapByWords =
+            partitionByMap.entrySet().stream()
+                            .filter(e -> !e.getKey())
+                            .flatMap(s-> s.getValue().stream())
+                            .collect(groupingBy(Function.identity(), () -> new LinkedHashMap<>(), counting()));
+
+      final Long max = partitionByMap.entrySet().stream()
+                                .filter(e -> e.getKey()).flatMap(s-> s.getValue().stream())
+                                .collect(counting());
+
+      summaryMapByWords.put("integer", max);
+
+      return summaryMapByWords;
     }
 
     protected String generateOutput(Map<String, Long> summaryMap) {
