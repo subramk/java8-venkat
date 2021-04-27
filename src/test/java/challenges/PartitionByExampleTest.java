@@ -16,8 +16,7 @@ import org.junit.runner.RunWith;
 @RunWith(JUnitPlatform.class)
 public class PartitionByExampleTest {
 
-  List<Person> personsList = new ArrayList<>();
-
+  final List<Person> personsList = new ArrayList<>();
   private PartitionByExample partitionByExample ;
 
   @BeforeEach
@@ -30,27 +29,26 @@ public class PartitionByExampleTest {
     Person p3  =  new PersonBuilder().setId(300L).setAge(44).setName("Anez").build();
     Person p6  =  new PersonBuilder().setId(300L).setAge(44).setName("SouthwestSingam").build();
     Person p7  =  new PersonBuilder().setId(300L).setAge(44).setName("Reshma").build();
-
     // duplicate with Age=35;
     Person p4  =  new PersonBuilder().setId(400L).setAge(35).setName("Ilango").build();
     Person p5  =  new PersonBuilder().setId(400L).setAge(35).setName("VertivelThambi").build();
     Person p8  =  new PersonBuilder().setId(400L).setAge(35).setName("Satishhhhessssssssshuuuu!!!").build();
 
     // Seniors
-    Person p9  =  new PersonBuilder().setId(400L).setAge(67).setName("Rajini").build();
+    Person p9  =   new PersonBuilder().setId(400L).setAge(67).setName("Rajini").build();
     Person p10  =  new PersonBuilder().setId(400L).setAge(62).setName("Kamal!!!").build();
 
-    List<Person> personsList = new ArrayList<>();
-    personsList.add(p1);
-    personsList.add(p2);
-    personsList.add(p3);
-    personsList.add(p4);
-    personsList.add(p5);
-    personsList.add(p6);
-    personsList.add(p7);
-    personsList.add(p8);
-    personsList.add(p9);
-    personsList.add(p10);
+    final List<Person> personsList = new ArrayList<>();
+          personsList.add(p1);
+          personsList.add(p2);
+          personsList.add(p3);
+          personsList.add(p4);
+          personsList.add(p5);
+          personsList.add(p6);
+          personsList.add(p7);
+          personsList.add(p8);
+          personsList.add(p9);
+          personsList.add(p10);
   }
 
   @Test

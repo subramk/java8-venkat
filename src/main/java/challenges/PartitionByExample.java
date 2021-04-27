@@ -48,8 +48,4 @@ public class PartitionByExample {
     return persons.stream()
       .collect(partitioningBy(seniorPerson, mapping(Person::getAge, toList())));
   }
-
-
-
-
 }

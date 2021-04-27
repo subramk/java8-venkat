@@ -4,19 +4,30 @@ import static java.util.Comparator.comparing;
 import static java.util.OptionalInt.empty;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.filtering;
+import static java.util.stream.Collectors.flatMapping;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.maxBy;
 import static java.util.stream.Collectors.minBy;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+/*
+  Examples from here : Venkat's talk on Collectors
+
+        https://www.youtube.com/watch?v=pGroX3gmeP8
+
+ */
 
 public class GroupingByAndMapping {
 
@@ -49,7 +60,7 @@ public class GroupingByAndMapping {
   }
 
   // usage of groupingBy with mapping()
-  public Map<String, List<Integer>> nameOfPersonGroupedByTheirAge(List<Person> personList) {
+  public Map<String, List<Integer>> nameOfPersonGroupedByTheirAges(List<Person> personList) {
 
     // GroupingBy Id  && then we want to have only the List<String> names of the person
     Map<String, List<Integer>> namesOfPersonsMap = personList
@@ -60,24 +71,36 @@ public class GroupingByAndMapping {
         // 2) groupingBy(Function<T,R>, Collector) ==> Collector
 
         // mapping here is the downstream Collector.
+        // mapping needs to be specified the Collector into which the mapping should
+        // takes place ..( can be a List , set etc ) . List is the default .
+
         groupingBy(Person::getName,mapping(Person::getAge, toList())));
-        //groupingBy(Person::getName,mapping(Person::getAge, toSet()))); //using Set Variant instead of List.
+
+        // using Set Variant instead of List.
+        //groupingBy(Person::getName,mapping(Person::getAge, toSet())));
+
     return namesOfPersonsMap;
   }
 
   // usage of groupingBy + counting()
-  public Map<String, Long> groupByPersonNameWithCount(List<Person> personList) {
+  // the Map will hold the value like this....
+  //  Ex :   bob - 3
+  //         raj - 2
+  //         John - 2
+  public Map<String, Long> groupByPersonAndCountOfPersons(List<Person> personList) {
     // GroupingBy Id  && then we want to have only the List<String> names of the person
     Map<String, Long> groupByPersonNameWithWithCount = personList
       .stream()
       .collect(
         // counting here is the downstream Collector.
-        groupingBy(Person::getName,counting())); // COUNTING always returns a Long.
+        // COUNTING always returns a Long.
+        groupingBy(Person::getName,counting()));
+
     return groupByPersonNameWithWithCount;
  }
 
   // groupingBy + collectingAndThen()
-  public Map<String, Integer> groupByPersonNameWithCountAsInteger(List<Person> personList) {
+  public Map<String, Integer> groupByPersonNameWithPersonCountInteger(List<Person> personList) {
 
     // GroupingBy Id  && then we want to have only the List<String> names of the person
     Map<String, Integer> groupByPersonNameWithWithIntCount = personList
@@ -86,13 +109,32 @@ public class GroupingByAndMapping {
         // use collectingAndThen to Collect and transform
         // the Long returned by counting() to a Integer value.
         groupingBy(Person::getName,collectingAndThen(counting(), val -> val.intValue() )));
-        // can be more neater as below .
+        // The above can be more neater as below .
         //groupingBy(Person::getName,collectingAndThen(counting(), Long::intValue ));
+    return groupByPersonNameWithWithIntCount;
+  }
+
+
+
+// Here ... the collectingAndThen that returns a Map<String, Holder> - Holder is like a DTO class that holds
+// the value.
+
+  public Map<String, Holder> groupByPersonNameAndValueAsObject(List<Person> personList) {
+
+    // GroupingBy Id  && then we want to have only the List<String> names of the person
+    Map<String, Holder> groupByPersonNameWithWithIntCount = personList
+      .stream()
+      .collect(
+        // use collectingAndThen to Collect and transform
+        // the Long returned by counting() to a Integer value.
+        groupingBy(Person::getName,collectingAndThen(counting(),  val -> convertToHolder(val))));
 
     return groupByPersonNameWithWithIntCount;
   }
 
-  // usage of maxBy - Get the Oldest person in the group.
+
+
+// usage of maxBy - Get the Oldest person in the group.
 
   public String   getNameOfOldestPersonName(List<Person> personList) {
 
@@ -137,6 +179,62 @@ public class GroupingByAndMapping {
   }
 
 
+  public void groupByPersonAgeAndNameLengthMoreThanFourLetters(final List<Person> personList){
 
+        Map<Integer,List<String>> list  =   personList
+              .stream()
+              .collect(
+                // Function , DownstreamCollector
+                // filtering - Java 11 feature
+                groupingBy(Person::getAge,
+                    mapping(Person::getName, filtering(name -> name.length() > 4,toList()))));
+
+  }
+
+// teeing - Java 12 - Combining 2 Collectors ...TODO example .
+
+
+// groupingBy + mapping + flatMapping
+// flatMapping is done while the mapping operation is being peformed.
+  public void groupingByUsingMappingAndFlatMapping(final List<Person> personList){
+
+    Map<Integer, Set<String>>  uniqueLettersOfAllNames =
+      personList
+          .stream()
+          .collect(
+      // Function , DownstreamCollector
+      // filtering - Java 11 feature
+          groupingBy(Person::getAge,
+              mapping(person -> person.getName().toUpperCase(),
+                  flatMapping( name -> Stream.of(name.split("")),toSet()))));
+
+}
+
+/*
+    Just a simple DTO object to hold values .
+ */
+  class Holder {
+
+    Integer integerVal ;
+
+    public Integer getIntegerVal() {
+      return integerVal;
+    }
+
+    public void setIntegerVal(final Integer integerVal) {
+      this.integerVal = integerVal;
+    }
+
+
+  }
+
+
+  private Holder convertToHolder(Long inputValue){
+    Holder holder = new Holder();
+    holder.setIntegerVal(inputValue.intValue());
+    return holder;
+
+
+  }
 
 }

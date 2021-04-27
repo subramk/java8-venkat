@@ -3,3 +3,8 @@
 Examples of code snippets that uses the new Java 8 Features. A play area to trial FP and its nuances vs the traditional imperative style of Java programming.
 Nothing sensational .  Only simple, everyday stuff !! 
 
+- TODO
+    - lombok 
+    - Introduce Gradle 
+    - Migrate to Java 11 
+    - yaml files for application.properties etc.

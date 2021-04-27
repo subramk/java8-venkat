@@ -1,18 +1,13 @@
 package certification;
 
-public enum RuleSet {
+  public enum RuleSet {
 
-  STD("standadrd"),
-  ROM("rom"),
-  ISO("iso");
+  ROM("ROM"), DVA("DVA"), DVLA("DVLA"), ISO("ISO");
 
-  private String description;
+  private String desc;
 
-
-  RuleSet(String desc){
-    this.description = desc;
-  }
-
-
-
+   RuleSet(String desc){
+    this.desc = desc;
+  };
 }
+

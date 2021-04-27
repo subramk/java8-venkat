@@ -1,0 +1,1181 @@
+
+Preparatory Notes of Java 11 ...
+
+--819
+
+https://enthuware.com/oca-ocp-java-certification-resources/257-pass-ocp-java-11-1z0-819-certification
+
+https://education.oracle.com/java-se-11-developer/pexam_1Z0-819
+
+https://www.selikoff.net/2020/08/26/dont-panic-oracle-announces-new-java-ocp-11-exam/
+
+https://enthuware.com/oca-ocp-java-certification-resources/257-pass-ocp-java-11-1z0-819-certification
+
+Security :
+
+https://www.oracle.com/java/technologies/javase/seccodeguide.html
+
+******************************************************************************************************************************************************************
+
+
+Tips from Oracle University Java 11 PDF 130 pages
+
+URL :
+https://learning.oracle.com/player/play?in_sessionid=J9J1850JAJ55542&classroom_id=129886559
+
+
+BAOS outputStream = new BAOS();
+
+var outputStream = new BAOS()
+
+// use var in try with resources syntax
+
+try ( var is = socket.getInputStream , var reader = new InputStreamReader(....) ,
+	  var bufferredReader = new BufferedReader(....))
+	  {
+	  // method logic here
+	  }
+
+var - is not a keyword
+
+var should be always with intial avlue
+
+used in forEach loop
+
+var - can be used in lambda syntax  ... (var x, var y ) -> x.process(y) etc...
+
+var - should be be null in declararion
+
+var - cannot be used in parameters
+
+var -  cannot be used in method return types.
+
+DO NOT mix var and non var casese
+( var x, int y ) -> x.process(y) // DOES NOT COMPILE
+
+DO NOT MISS PARENTEHSIS FOR explicity types parameters
+
+Consumer<String> c1 = final String x -> sop(x) ; // should BE (final String x);
+
+// should be (final var x , final var y )
+OR
+// should be ( var x , var y)
+
+BiConsumer<String,String> c2 = (final var x , y ) ->  sop(x + y ) ;
+
+
+INHERITANCE Rules for default methods
+
+Rule 1 - Superclass METHOD takes priority over an Interface Default method
+
+			class A {
+				public void m1(){.....}
+			}
+
+			interface B {
+					default void m1(){....}
+			}
+
+			class D extends A implements B{
+				calling m1() here.... will Call the m1() in Class A .
+			}
+
+
+
+
+Rule 2 - A Subtype Interface DEFAULT method takes priority over a SuperType DEFAULT method
+
+			interface B {
+					default void m1(){....}
+			}
+
+			interface C extends B {
+					default void m1(){....}
+			}
+
+			class D implements C{
+				.....
+				D  d = new D();
+				d.m1() // will CALL THE m1() from interface  C .
+			}
+
+
+
+
+General Rules
+
+FIELDS  in an Interface are implicity  STATIC and FINAL
+Methods of an Interface are implicity public and abstract ( Java 7)
+
+Default methods MUST BE PUBLIC , and they can be overriden by implementing classes.
+
+Interface methods can be private ( Java 9 feature)
+	- PRIVATE INTERFACE METHODS cannot be overriden
+	- PRIVATE INTERFACE METHODS CANNOT  be called from a class that implements the interface
+	- Hence it becomes a place to store common logic ONLY
+	- private default methods - ( syntax results in COMPILER ERROR . )
+
+
+ A Functional Interface can have only one Abstract method
+
+ Remaining Methods if Any
+ * Any number of default methods are okay
+ * Any number of private methods are fine
+ * Any number of static methods are fine.
+
+
+
+
+Chapter 1 - Class design
+1. class can be final - means cannot be overriden .
+2. method can be static OR  final
+3. Enum can have only a private or package private constructor
+4. ENUM CANNOT have a public or private constructor , only default ( ie package private constructor)
+
+
+
+4.Inner Classes
+	4a .Member Inner classes - class defined at the same level as instance variables.
+			 - can be public,private,protected, abstract or final
+			 - cannot declare static fields or methods
+			 - can acccess members of outer class including private variables.
+
+
+	4b. Local Inner classes ( ie CLASS  defined inside of a method )
+			- cannot have a access specifier
+			- cannot declare static fields or methods
+			- they have access to fields /methods of enclsoing class
+			- ..but variables need to be final or effectively final .
+
+	4c. anonmyous inner classes.
+	4d. static nested classes ...
+
+
+5. MEMBER Inner Classes cannot have static methods or static local variables.
+
+6.ONLY STATIC NESTED CLASSES are PERMITTED TO CONTAIN STATICS.
+
+7.MEMBER Inner Class CAN BE PRIVATE ...INNER CLASSES are always within the scope of the enclosing outer
+class and the byte code generated is of the format like this OuterClass$InnerClass.class
+
+7. static interface Mammal{ } - is a valid java code
+
+
+Bounded Wildcards
+
+?  extends T - upper bound
+?  super  T - lower bound
+
+because of TypeErasure java does not know at runtime what TYPE of element is stored in the collection . So it uses the compiler to prevent this situation from coming in the first place
+
+List<Integer> nums = new ArrayList<Integer>();
+nums.add(new Integer(42));
+
+List<Object> objectList = nums // does not compile
+
+
+
+When we use ? extends T - we cannot add to the collection , but removing is allowed.
+
+Whew we use ? super T - we can add T or ANY SUPERCLASS of T to the collection
+
+ex :
+
+			void addSound(List<? super String>  list){
+					list.add("quacking..."); // ok
+
+
+			}
+
+bounded wildcards MUST HAVE THE ? symbol in :
+
+? extends A - A or Any Subclass of A  [ UPPER BOUND ]
+? super A - A or any other Superlcass of A or Object [ LOWER BOUND..]
+X super A - incorrect . cant mix wildcard with method specific parameter.
+
+List<?> list = new ArrayList<?> - wont compile ... wildCard ? SHOULD NOT be on the RHS of the expression.
+
+LinkedList interface implements BOTH LIST AND QUEUE interfaces.
+
+
+Class A{}
+Class B{} extends A
+Class C{} extends B
+
+void method4(List<? Super B>) - this is lower bound . we can pass B , A or the Object class . The lowest
+bound is B . 'Super' is lowerbound , ie the lowest level Class that can be passed is what is mentioned
+in the signature.
+
+List<? extends  B> - Extends is the UpperBound ...it means B or any sublcass of B ( like Class C ) can be added as a method parameter ....
+
+
+Big-O notation
+
+O(1) - constant time . No matter size of the collection , accessing any element takes the same time.
+
+O(log n) - Log is a matematical function that grows more slowly than the data size.
+
+O(n) - linear time . Larger the collection , longer the time to access element and vice versa.
+
+O(n square) - Takes to the power 2 exponential time to access elements of collection .
+
+
+
+LinkedList : to add at beginning or ending of queue in O(1) constant time.
+
+ArrayDeque - new class in Java 6 that implements Stack Functionality..Goes in at bottom , comes out at the TOP.
+
+SET - no duplicates, no ordering  ... TreeSet , ordered set using Comparator.
+LIST - duplicates, ordering
+
+Navigable Set - methods
+
+.lower(E e) ;// greatest element <  than e
+.floor(E e) :/  greatest element <= than 8
+.ceiling(E e) :// smallest element >= e
+.higher(E e) :// highest  element > e
+
+
+Queue
+	.add( )			- Adds an element to the BACK of the queue.
+	.offer( )		- Adds an element to the BACK of the queue.
+	.remove()
+	.push( ) 		- AddS an element to the FRONT  of the queue (IMPORTANT)
+	.poll( ) 		- REMOVES or returns NEXT   element or returns null if empty
+	.peek( )		- READ only of top of the queue.
+	.pop( )			- Removes next element or throws an exception ...
+
+
+
+
+ArrayDeque - is a DOUBLE ENDED QUEUE
+
+	.push( ) - adds element to the FRONT  of the dequeue
+	.add( ) - adds element to the BACK  of the dequue -  Mne: .add() always appends to end of list..etc.
+
+
+Map - no null keys , duplicate values are okay , null values are okay
+TreeMap - no null keys
+TreeSet - no null elements
+ArrayDeque - no null elements.  It is a DOUBLE ENDED QUEUE .
+
+
+.push() - ADD to the Front of the QUEUE
+.offer() - Add to the REAR of the QUEUE
+.add() - add to the front of the Queue
+.peek() - returns NOT REMOVES the element at the top of the Queue
+.poll() - Removes and returns nexte element or returns null if empty
+.pop() - Removes and returns next element or throws an Exception if empty Queue.
+
+
+Comparable - overide method compareTo() - takes one arg and returns an int.
+
+Comparator - overrider method compare() - compare takes two args and returns an int
+Can be used in Functional Style and to pass around as param to TreeMap etc...
+
+Numbers sort before letters and uppercase sorts before lowercase letters.
+
+******************************************************************************************************************************************************************
+
+Chapter 4 - Functional Programming :
+
+Predicate , BiPredicate     - test()
+Function, BiFunction 	    - apply()
+Consumer,BiConsumer		    - accept()
+Supplier	                - get()
+UnaryOperator, BinaryOperator - apply()
+
+
+Optional
+
+Optional.empty()
+
+Optional.isPresent() - returns true or false based on value present or not.
+
+Optional.ifPresent(Consumer c)
+
+Optional.of()
+
+
+Optional opt = Optional.ofNullable(value);
+// here opt can have a value or be nullable
+
+opt.orElse(T other)
+
+opt.orElseGet(Supplier s)
+
+
+opt.orElseThrow(Supplier s) - throws exception created by calling a supplier....
+
+
+Stream::
+Common methods are
+
+Stream.empty()
+Stream.of()
+Stream<Double> dblStream = Stream.generate(Math::random)
+Stream<Integer> integerStream = Stream.iterate(1, n -> n + 2);
+((
+
+Terminal Ops on Streams
+- allMatch(), noneMatch(), anyMatch()
+
+- allMatch() , noneMatch() , anyMatch() MAY OR MAY NOT TERMINATE , when
+	  they are used for infinite Streams - ex Stream.generate()
+
+- collect()
+- count()
+- findAny() , findFirst() - these return an Optional
+- forEach()
+- min() / max()
+- reduce()
+
+overloaded .reduce() can be of 3 types
+
+	- T reduce(T identity, BinaryOperator<T> accumulator)
+	- Optional<T>  reduce(BinaryOperator<T> accumulator)
+	- <U> U reduce(U Identity, BiFunction<U, ? super T, U> accumulator, BinaryOperator<U> combiner)
+
+
+Primitive Streams.
+
+- 	IntStream , DoubleStream, LongStream (Mne : DIL)
+-   Common factory methods for primitve streams are
+		.of()
+		.range()
+		.rangeClosed()
+		.generate()
+		.iterate()
+
+
+- Using Optional With PrimitiveStreams.
+
+		- OptionalDouble
+		- OptionalLong
+		- OptionalFloat
+
+IntStream stream = IntStream.rangeClose(1,10);
+OptionalDouble optDouble = stream.average();
+
+
+IntStream stream = IntStrea.rangeClosed(1,10);
+OptionalDouble optDouble = stream.average();
+
+// Optional.get vs OptionalDouble.getAsDouble()
+
+
+// Optional.get vs OptionalDouble.getAsDouble()
+
+if(optDouble.isPresent()){
+	Double dd = optDouble.getAsDoube();
+}
+
+
+Stream.of();
+Collectors.toMap()
+
+
+
+IntStream ints = Stream.of(1,2,3,4);
+
+IntSummaryStatistics iss = ints.summaryStatistics();
+
+Integer range = iss.getMax() - iss.getMin();
+
+
+
+******************************************************************************************************************************************************************
+
+
+
+8)  Chapter IO -
+
+
+System.getProperty("file.separator") - to get either a / or a \ , depending on the OS
+(windows or unix based)
+
+File
+		- exists()
+		- .length()
+		- .listFiles() - returns a File[]
+		- isDirectory()
+		-
+
+Stream Classes in java.io
+
+
+- Main classification
+
+(bytestreams are useful for all types of binary or byte data )
+
+ByteStreams - ex FileInputStreams, FileOutputStream etc. Note , even though these are to deal
+with byte or binary data , we can still write all code for both BYTE /BINARY and
+String/Character data using the BYTESTREAM classes
+
+
+(Reader classes - only for characeters and string data ) - CharacterStreams - FileReader, FileWriter etc. these Character Streams are somtimes referred to as a conviencene classes for working with the text data. Reader/Writer help to deal with String values without necessarily worrying about the underlying byte encoding of the file etc.
+
+
+Generally , for reading/writing the streams are decorated one after another .
+
+Ex
+
+try( ObjectInputStream ois = new ObjectInputStream(
+							 new BufferredInputStream( new FileInputStream("abc.txt")))){
+
+		sysout( ois.readObject() )
+
+		}
+
+flush() method gets called when the close() method get called .
+
+FileInputStream - FIS
+		- has the .read() method that returns an int indicating EOF
+
+BufferredInputStreams offer performance enhancement as they are read/write in chunks  .
+
+BufferredInputStream  has  .read(byte[]) method
+
+
+BufferedReader/BufferredWriter - for reading/writing text data
+
+				reader.readLine()
+
+
+InputStreams have the .read() or .read(byte[])
+CharacterStreams have the  .readLine()
+
+
+Serializing/DeSerializing
+	- objectOutputStream.writeObject(obj) - serialize the java object to stream .
+
+To user Deserialization .
+
+ObjectInputStream ois = new ObjectInputStream
+Object object = ois.readObject()
+
+Usage of transient keyword - DOES NOT SERIALIZE objects across the wire.
+
+
+PrintStream / PrintWriter - high level java classes that write java objects to a text based output system.
+Ex : .println() , .print() , .printf() methods of System.
+
+
+InputStreamReader  and OutputStreamWriter - Bridge classes between Streams and Reader/Writer . These classes convert data between character and byte streams.
+
+InputStreamReader - takes an inputStream and returns a Reader
+OutputStreamWriter - takes an outputStream and returns a Writer object.
+
+
+java.io.Console classes - replaces System.in and System.out clasess - for interacting with users to display information in a text based environment.
+
+Console is a singleton Class .
+
+Console console  = System.console()
+console.readLine() -reads a line from the console
+
+.reader() - returns a Reader object
+.writer() - returns a Writer object
+
+.readPassword - returns a char[] array and NOT  a string
+	- this ensures it never enters the string pool in memory
+	- it is more secure
+	- value can be removed from memory immedately after use.
+
+An NPE may be thrown when working with Console ,if no Console is available to output....
+
+An IOExecptoin may be thrown when calling writer.append()
+
+declcaring a static final serial version id is recommended , but NOT COMPULSORY to make the class serializable.
+
+
+Important methods in java.io.File
+
+- rename() to move a File
+- mkdir()
+- mkdirs()
+
+There is no class called PrintReader - there is only a PrintWriter class.
+
+
+******************************************************************************************************************************************************************
+
+
+
+9) NIO
+
+Path  - Interface - represents a location of a file within the Filesystem.
+Paths - Factory class
+
+Path is an Interface , while Paths is a Class.
+
+// Absolute Path
+
+
+- either begin with a drive letter like "c:\\work\\myfile.txt" - double backslash for windows ssytems
+
+OR
+
+- forward slash for unix systems like "/home/work/myfile.txt"
+
+
+// Paths.get
+
+
+Path file1 = Paths.get("pandas", file.png) - /pandas/file.png
+
+Path file2 = Paths.get("c:","zoos","pandas", file.png) - c://zoos//pandas//file.png
+
+
+Import methods of the Paths class
+
+
+- Paths.getFileName()
+- Paths.getRoot()
+- Paths.getParent()
+- Paths..toAbsolutePath() - convert to absolute path by preprending the current directory location to the path
+
+- Paths.relativize() - constructing the relative path from one Path to Another.... both paths should be either absolute or both should be relative
+- otherwise a RT Exception will be thrown .
+
+
+- Paths.normalize()
+
+The normalize() method of java.nio.file.Path used to return a path from current path in which all redundant name elements are eliminated.
+
+The precise definition of this method is implementation dependent and it derives a path that does not contain redundant name elements. In many file systems, the “.” and “..” are special names indicating the current directory and parent directory. In those cases all occurrences of “.” are considered redundant and If a “..” is preceded by a non-“..” name then both names are considered redundant.
+
+Both .relativize() and .normalize() methods do not check if the file actually exitss in the file system - For that we need to to .toRealPath()
+
+Sop(Paths.get("/zebra/food.source").toRealPath() ) - will throw a IOException if File location is
+not not present in the underlying system...... -
+
+java.io.File  - legacy  && java.nio.Files - new Java 8 API -
+
+Move a File - use renameTo() from old IO or use the Files.move() static Method of new Java 8 API
+
+Create  a Directory - use mkdir() /mkdirs() from old IO or use the nio.io Files.createDirectory(Path) or the Files.createDirectories() static methods. IOExceptoin  will be thrown if the Path is not present
+
+Note that the old mkdirs() as well as the nio.createDirectories() method
+will create the target directory along with any non existent parent directories leading upto the target
+directory in the path. No exception will be thrown .
+
+Move a File - use renameTo() from old IO or use the Files.move() static Method from  NIO
+Files.move() will throw a IOE if the directory could not be found..
+
+Copy a File - not present in old IO API . NIO has a Files.copy(Path,Path) copies a file from one path location to another. IOE is thrown if path does not exists
+
+Copy Files
+
+InputStream is = new FIS("source-data.txt");
+OutputStream os = new FOS("output-data.txt");
+
+// Stream data into a File using InputStream.
+Files.copy(InputStream , Path)
+
+//Copy file data to stream
+Files.copy(Paths.get("/out/file-1.txt"), OutputStream)
+
+Files.exists()  - returns a boolean to say if a File/Directory is present or not .
+
+Files.exists(Paths.get("/ostrich/feathers.png")) - returns true if file exists
+
+Files.exists(Paths.get("/ostrich"))  - returns true if the Directory exists .
+
+Files.isSameFile() - Does two Path objects refer to the same FilePATH or Directory  within the FileSystem ,
+( here note that it is FilePath and not the contents of the File)
+
+Two files may have identical contents and attributes , but if they are in different LOCATION  , then  isSameFile() will return FALSE.
+
+Files.delete(Paths.get("/a/b/c.txt") - Deletes a File
+
+Files.deleteIfExists(Paths.get("/pigeon")) - Deletes the pigeon directory. Note :: If the directory has contents then a DirectoryNotEmptyException will be thrown
+
+IOException  will be thrown if files do not exists.
+
+
+Files.isDirectory()  // returns boolean
+Files.isRegularFile() // returns boolean
+Files.isSymbolicLink();  // returns boolean
+
+Files.isHidden(); // returns boolean
+Files.isReadable(Paths.get("/seal/baby.png")); // returns boolean
+Files.isExecutable(Paths.get("/seal/baby.png")) // returns boolean (
+
+Files.getLastModifiedDateTime()
+Files.setLastModififedDateTime(path , FileTime)
+
+Files.newBufferedReader() and Files.newBufferredWriter()
+
+// read
+newBufferedReader.readLine()
+
+// write
+newBufferredWriter.write()
+
+
+// readAllLines . this is non performant as it reads the entire path into memory and may
+// result in a OOM error at times.
+
+List<String> lines = Files.readAllLines(Path)
+
+// Better option would be to use Files.lines()
+
+Stream<String>  singleLine = Files.lines(path)
+
+
+
+
+// Files.walk() and Files.find()  - Important recursively traverses the depth of the Directory tree
+// But note the signature are different .
+// we can specify the depth to be searched in the .find() method and it also take a BiPredicate.
+// Both methods return a Stream<Path>
+
+Stream<Path> streamOfFiles = Files.walk(Path)
+
+// Files.find() -  Important recursively traverses the depth of the Directory tree
+
+Files.find(Path, int, BiPredicate) - NOTE THE PARAMETERS
+
+//List files -old way
+// IMPORTANT , ONLY retrieves memebers of the Current Directory . (ie No Recursive operations here..)
+
+List<File> files =   File.listFiles()
+
+// List files - NIO
+
+// Files.list() retrieves the contents of a single directory level and makes them available as a stream.
+Stream<Files> streamOFiles = Files.list()
+
+
+BasicFileAttributes is a READ ONLY
+BasicFileAttributeView can be used to modify the access and modify the metadata of the class...
+
+
+******************************************************************************************************************************************************************
+
+
+
+Concurrency
+
+Runnable - returns void and does NOT THROW CHECKED EXCEPTION out of the box , though we can wrap in a try catch block .  public void run() is the method that we need to implement for Runnable
+
+Callable - returns a Value and throws a Checked Execpetion
+
+Both Runnable and Callbale can throw UNCHECKED EXCEPTIONS.
+
+Callable has a call() that returns a Value
+
+public interface Callable<V> {
+    V call() throws Exception;
+}
+
+// Obtain ExecutorService using the Factory method
+
+ExecutorService service =  Executors.newSingleThreadExecutor()
+
+In all cases ,once done .. service.shutDown() must be called to prevent hanging of the programme.
+
+1) void service.execute(Runnable r)
+
+2) Future<?> service.submit(Runnable runnable  ) - as Runnable returns VOID  doing a get() on the Future object  ALWAYS IS A NULL - IMPORTANT.
+
+3) <T> Future<T> service.submit(Callable<T> callable)
+
+4) <T> List<Future<T>> service.invokeAll(Collection<? extends Callable<T> tasks) throws InterupptedException - SYNCRHRONHOUS , invokess all Tasks and returns a List<Future>
+
+5) <T> service.invokeAny(Collection<? extends Callable<T> tasks)
+								throws InterupptedException,ExecutionException
+						- Any Task can be returned , no guarantee.
+
+TASK may be completed or thrown exception . In both cases the Future.isDone() will return true;
+
+we can do
+
+future.get(10,TimeUnit.SECONDS) to get value out of the future object.
+
+
+IMPORTANT : NO TASKS EXECUTED CONCURRENTLY WHEN Executors.newSingleThreadExecutor() IS USED .
+
+
+SCHEDULERRS
+
+// Obtain SchedulerExecutorService  using the Factory method of the Executors class.
+
+SchedulerExecutorService schExecutorService =  Executors.newSingleThreadScheduleExecutor()
+
+methods
+	- schExecutorService.schedule(Callable,delay,TimeUnit)
+
+	- 	" "				.schedule(Runnable,delay,TimeUnit)
+
+	-	" "				.scheuldeAtFixedRate(Runnable,long initialDelay,long period, TimeUnit unit)
+	-	" "				.scheuldeAtFixedDelay(Runnable,long initialDelay,long period, TimeUnit unit)
+
+	scheuldeAtFixedDelay creates a Runnable Task after a initial delay and subsequently with the given delay between the termination of one execution and the commencement of the next ..
+
+
+Note scheuldeAtFixedRate and scheuldeAtFixedDelay both take Runnable as their arguments - possibly as
+these operations are scheduled to run indefinetely and if there was Callable instead of Runnable , it would generate an infinite series of Future objects.
+
+
+******************************************************************************************************************************************************************
+
+
+Concurrency + Pooling
+
+newCachedThreadPool()
+newFixedThreadPool(int threads)
+newScheduledThreadPool(int threads)
+
+Atomic Classes - This is used for thread safe access to variables so that we can prevent a race condition -
+
+Race condition is when two tasks which are EXPECTED to complete SEQUENTIALLY , execute at the same time , overwriting the action of one by the action of the other , thereby giving an undesirable effect.
+
+
+AtomicInteger,AtomicLong,AtomicBoolean etc
+
+incrementAndGet()
+getAndIncrement() etc
+
+
+Using Parellism
+----------------
+
+On the Stream class  like  - stream.parallel();
+On Collections class like  - collection.parallelStream()
+
+Arrays.asList(1,2,3,4,5,6).parallelStream().forEachOrdered( s -> sysout(s)) ;
+
+
+On Collections , there is a 3 args version method for both .reduce and .collect
+
+.reduce( Identity identity , BiFunction accumulator , BinaryOperator combiner)
+.collect( Supplier supplier, BiFunction accumulator , BinaryOperator combiner)
+
+
+
+ForkJoin Pool - has two classes , and we need to ensure their .compute() method is invoked .
+
+	 		- RecursiveAction - implement compute() that returns void 			- similar to Runnable
+	 		- RecursiveTask	  - implement compute() that returns Object<T> 		- similar to Callable<T>
+
+Steps to use the ForkJoin Pool
+
+1) Create the ForkJoinTask
+2) Create the ForkJoinPool
+3) Invoke the Task  		  , using the forkJoinPool.invoke(Task task) method
+												(OR)
+								forkJoinPool.invoke(Collection<? extends Task> tasks)
+
+The Task in the .invoke() method refers to either RecursiveAction /RecursiveTask
+
+
+Deadlock : 2 or more threads blocked forever , each waiting on the other to finish.
+
+Starvation : When a single thread is perpetually denied acess to a shared resource or lock
+
+LiveLock : 2 or more threads are conceptually blocked forever , although they are each still active
+and trying to complete their task .
+
+
+
+synchronised(obj){
+	 // code here.
+
+}
+
+
+Alternative locking mechanism ..
+ a higher level of abstraction of locking and also NOT  using the low level synchronized blocks
+ synch methods etc.
+
+
+ReentrantReadWriteLock
+	- allows actions to be peformed on object in a thread safe way
+	- present in the java.util.concurrent.locks pagckage
+	- write locks prevent concurrent modifification of the object
+	- read lock acquired if write lock is not held by another thread, allowing concurrent read actions.
+
+	ReentrantReadWriteLock r1 = new ReentrantReadWriteLock();
+
+	private Lock r1 = rw1.readLock();
+	privaet Lock w1 = rw1.writeLock()
+
+	public Product get(int id){
+		r1.lock()
+		try {
+			return // logic to obtain a product
+		}finally(){
+			r1.unlock();
+		}
+
+	}
+
+	public void add(Product p){
+		w1.lock();
+		try{
+			// logic to add Product to some collection etc.
+		}finally{
+		w1.unlock();
+
+		}
+
+	}
+
+
+
+******************************************************************************************************************************************************************
+
+
+Java Modules
+
+In Java 9 , the monolithic JAva was broken into 90 modules
+
+- Similar packages and frameworks are grouped in their own modules
+- these make applications more scalable on small devices
+- improved application performance
+- logging is part of the java.logging module
+- AWT/Swing is part of the java.desktop module
+- java.base  - base module of java
+
+
+A module is a group of one or more packages plus a special file called module-info.java
+
+The Java Platform Module System allows developers to specify what modules they actually need. This makes it possible to create a smaller runtime image that is customized to what the application needs and nothing more. Users can run that image without having Java installed at all
+
+The module-info.java file must be in the root directory of your module. Regular Java classes should be in packages .
+
+module-XXX.java is the naming convention for a module file
+
+Also a mods directory is created at the root level . mods can be replaced with any other name and - This will be used for  storing the module artifacts ( ie the module jar file)
+
+- How to Create a Module.
+
+javac --module-path mods -d feeding feeding/zoo/animal/feeding/*.java  feeding/module-info.java
+
+-d => where to place the .class file
+--module-path => where do we want our module to be placed . ( similar to classpath. )
+
+feeding/zoo/animal/feeding/*.java => list of java files to compile
+
+The module-info.java file HAS TO BE PLACED INSIDE the /feeding folder , which is in the ROOT DIRECTORY of the package.
+
+The module-info.java  file must use the keyword module instead of class, interface, or enum.
+
+module-info.java CAN BE EMPTY.
+
+Sample module-info.java file
+
+module zoo.animal.talks {
+
+	exports zoo.animal.talks.content;
+	exports zoo.animal.talks.media;
+ 	exports zoo.animal.talks.schedule;
+
+	requires zoo.animal.feeding;
+	requires zoo.animal.care;
+
+}
+
+// exporting the packages here ..... means that the classes inside the zoo.animal.talks.* folders ,
+(REQUIRE / DEPEND )  on the  zoo.animal.feeding and the zoo.animal.care folders.
+
+
+module-info file (useful commands that are used in the module-info file are as follows )
+
+exports,
+requires (can be  also 'requires transitive')
+provides,
+uses
+opens
+
+
+ANYTHING NON PUBLIC , IS NOT REDABLE EVEN FROM EXPORTED PACKAGES.
+
+package A ;
+public ClassA {
+	public int yearPublic = 2020;
+	protected int  yearProtected = 2019
+	int yearPackage = 2011;
+	private int yearPrivate = 2004;
+
+}
+
+module A {
+	exports pkgA;
+}
+
+
+module B{
+	requires A ;
+}
+
+Any Class in Module B cannot read the NON PUBLIC attributes from A , even though it has it as a dependency . So , only the yearPublic variable is accessible from packageA.ClassA
+
+Exports - packageName exports a package to other modules. It’s also possible to export a package to a specific module.
+
+There’s also a requires transitive moduleName, which means that any module that requires this module will also depend on moduleName
+
+java --describe-module
+java --list-modules
+
+jdeps -- The jdeps command gives you information about dependencies within a module. Unlike
+describing a module, it looks at the code in addition to the module-info file.
+
+
+jdeps -s 		mods/zoo.animal.feeding.jar
+jdeps -summary  mods/zoo.animal.feeding.jar
+
+jdeps mods/zoo.animal.feeding.jar
+
+Example - valid calls to list a summary of the dependencies  (NOTE:: the -s option NOT --s)
+
+jdeps -s flea.jar
+jdeps -summary flea.jar
+
+
+Like the java command, the jar command can describe a module. Both of these commands
+are equivalent
+
+jar -f mods/zoo.animal.feeding.jar -d
+jar --file mods/zoo.animal.feeding.jar --describe-module
+
+JMOD files are recommended only when you have native libraries or something that can’t
+go inside a JAR file
+
+However, the same module name is not allowed to be used in two requires statements.
+
+module snake {
+ exports com.snake.tail;
+ exports com.snake.fangs to bird;
+ requires skin;
+ requires transitive skin;  // COMPILE ERROR.
+}
+
+// WE CANNOT USE the same module name is not allowed to be used in two requires statements.
+
+// ALSO MODULE names follow rules of package name so numbers,hypens not allowed in module name.
+
+A. com.book   - OK
+B. com-book -  CONTAINS HYPENS.
+C. com.book$ - OK
+D. com-book$ - NO , CONTAINS HYPENS.
+E. 4com.book - NO , NUMERIC VALUES
+F. 4com-book - NO , NUMBERIC VALUES
+
+useful abbreviations that are used in the command line ...
+
+d  -> describe module
+m  -> module
+p  -> module-path
+s  -> summary
+
+list-modules				- no shorthand
+show-module-resolution 		- no shorthand
+
+
+// describe module
+java -p mods -d 				zoo.animal.feeding
+java -p mods --describe-module  zoo.animal.feeding
+
+java --list-modules
+java --show-module-resolution -p feeding -m zoo.animal.feeding/zoo.animal.feeding.Task
+
+javac -cp, -class-path, and -classpath => all ARE valid options for classpath
+
+
+Even before modules, it was rare to run javac and java commands manually on a real
+project. They get long and complicated very quickly. Most developers use a build tool
+such as Maven or Gradle. These build tools suggest directories to place the class files like
+target/classes.
+
+With modules, there is even more typing to run these commands by hand. After all, with
+modules, you are using more directories by definition. This means that it is likely the only
+time you need to know the syntax of these commands is when you take the exam. The
+concepts themselves are useful regardless
+
+
+java --module-path mods 		--module book.modules/ com.sybex.OCP
+	| Location of modules| 	    		|Module name|/ FQCN
+    | module name is mods|
+
+
+java --module-path feeding  --module zoo.animal.feeding/zoo.animal.feeding.Task
+
+								(OR)
+
+java -p 		   feeding	-m 		 zoo.animal.feeding/zoo.animal.feeding.Task
+
+******************************************************************************************************************************************************************
+
+
+Java 8 - DateTime
+
+- all the Local.of() methods are immutable .
+
+LocalDate - Only Date Part
+LocalDateTime  - Date and Time
+LocalTime  - Only Time
+ZonedDateTime - Date,Time and Zone
+
+
+
+Period   - When we want a to create a Period of certain number of days,weeks, years etc . ( Time part is not allowed in Period)
+
+Period.ofYears(1)  - every year ;
+Period.ofMonths(3) - every 3 months;
+Period.ofWeeks(4) - every 4 weeks;
+Period.ofDays(5) - every 5 days ;
+
+Chaining method constructor is like this
+
+Note : Period.of special constructor method
+
+// everyYearAndWeek
+Period.of(1,0,7) - every year and 7 days .
+
+Duration - Similar to period but has time component and deals with days,hours,minutes,second,nanoseconds
+
+Instant  - any unit which is in DAYS or smaller
+
+Localization / i18n
+
+en_US
+
+language - lowercase
+countryCode - Uppercase
+
+Java files are searched first before .properties are searched
+
+*****************************************************************************************************************************************************************
+
+Exceptions
+
+In a try with resources , the class in the try block should implement Closeable or AutoCloseable
+
+The older Closeable interface was allowed to throw an IOException or any subclass of IOExecption - The newer AutoCloseable interface is allwed to throw Exception or subclass of it
+
+In a multicatch try block only one name is allowed for ALL of the exceptions ..
+
+Ex:
+try( ){
+
+}catch(IOException | SQLException | SomeotherEx    eee){
+
+}
+
+- A traditional try catch requires a catch OR finally statement OR both of them.
+
+- A try with resources block need not have a finally to close resources. The parameters that go inside of this type of try
+implements AutoCloseable or Closeable interface.
+
+
+In a Multicatch Block  ( with old try {} or the newer try-with-resources) ,the exception is EFFECTIVELY final and cannot be reassigned
+
+try(..... ){
+
+}catch(SomeException | RuntimeException ee){
+	ee = new ... // Reassigning not possible, as ee is effectively final
+}
+
+In a Multicatch Block , the list of exceptions cannot be redundant - we cannot catch both Superclass and Subclass exceptions
+
+Ex
+try {
+	....
+	throw new IOException()
+}catch(____){
+	//  Catch block here CANNOT have FileNotFoundException | IOException as FileNotFoundException is a subclass of IOException
+}
+
+Assertions
+
+- assertions not enabled by default
+-> java -ea  to enable
+-> java -da  to disable
+
+
+java -enableAssertions <<ClassName>>
+(or)
+java -ea Rectangle <<ClassName>>
+
+
+******************************************************************************************************************************************************************
+
+JDBC
+
+Main Interfaces in JDK
+
+Driver
+Connection
+Statement
+ResultSet
+
+JDBC URL format
+
+jdbc:postgres://localhost:5432/zoo
+
+jdbc:postgres://10.22.22.333:5432/zoo
+
+jdbc:mysql://localhost:3306/zoo?profileSQL=true
+
+
+Connection conn = DriverManager.getConnection(~~~~~~~~);
+
+Statement statement = conn.createStatement();
+
+
+// Statement can take two param constructor ... ResultSet Type and RS Concurrency Mode
+Statement statement = conn.createStatement("ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY");
+
+
+Default - ResultSet.TYPE_FORWARD_ONLY ,
+Other ResultSet Types are ResultSet.TYPE_SCROLL_INSENSITIVE , ResultSet.TYPE_SCROLL_SENSITIVE
+
+
+ResultSet Concurrency Mode options are
+ResultSet.CONCUR_READ_ONLY
+ResultSet.CONCUR_UPDATABLE
+
+
+statement.execute() - does DELETE , INSERT , SELECT , UPDATE  - returns A boolean
+
+statement.executeQuery()  - ONLY SELECT - returns ResultSet
+statement.executeUpdate() - ALL EXCEPT SELECT - returns INT - indicating no.of.rows changed.
+
+ResultSet rs
+
+rs.getInt(1)  - JDBC starts counting Columns at 1 , not Zero .
+rs.getString("columnName")
+rs.getDate()
+rs.getObject()
+
+
+rs.next() - to start the cursor reading the ResultSet
+
+NOTE : IF NOT using rs.next() , then the ResultSet.TYPE should be SCROLL_SENSITIVE OR SCROLL_INSENSITIVE.
+
+rs.absolute(x) - move the cursor the position in the result Set.
+rs.absolute(0) - moves it to a  level before the start of the resultSet
+rs.absolute(-2) - moves cursor to the second last row in the ResultSet.
+
+
+Closing Connections - Always Close in the reverse order of opening
+
+Connection - closing Connection always closes Statement and ResultSet
+Statement - closing a Statement always closes a ResultSet
+
+
+JDBC always closes a ResultSet when you run another SQL Statement from the same Statement.
+
+Other important points
+
+1. Calling Class.forName is NOT NEEDED in JDBC 4
+2. Class.forName throws a ClassNotFoundException if the driver class is not found
+3. DriverManager.getConnection() throws a SQLException  if driver is not found.
+
+
+
+
+
