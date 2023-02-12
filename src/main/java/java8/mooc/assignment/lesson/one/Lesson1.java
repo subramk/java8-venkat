@@ -1,5 +1,7 @@
 package java8.mooc.assignment.lesson.one;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +71,7 @@ public class Lesson1 {
 		  
 		  List<String> filteredNames = names.stream()
 				  							.filter(oddNumberNamesPredicate)
-				  							.collect(Collectors.toList()); 
+				  							.collect(toList());
 		 filteredNames.forEach(n -> System.out.println(n));
 		  
 	  }
@@ -81,22 +83,27 @@ public class Lesson1 {
 	   */
 	  static void   exercise3() {
 		  
-		 List<String> names = Arrays.asList(
+		 List<String> names = List.of(
 			        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot");
-		 
+
+		 List<String> upperCasedSTringssss  = names
+				 								.stream()
+				 								.filter( n -> n.startsWith("d"))
+				 								.map(x  -> x.toUpperCase())
+				 								.collect(Collectors.toList());
+
 		 // Can be done this way as well 
 		 // names.replaceAll(String::toUpperCase);
 		
 		 // or Using a Function which takes input and Returns output 
-		 Function<String,String> convertToUpperCase = n -> n.toUpperCase();
-		 
-		 List<String> wordsCapitalized = 		names	.stream()
-				 										.map(convertToUpperCase)
-				 										.collect(Collectors.toList());
-		 wordsCapitalized.forEach(System.out::println);
+//		 Function<String,String> convertToUpperCase = n  -> n.toUpperCase();
+//
+//		 List<String> wordsCapitalized =
+//				 			name.stream().map(convertToUpperCase).collect(toList());
+//
+//		 wordsCapitalized.forEach(System.out::println);
 	  }
 	
-
 	  /**
 	   * Exercise 4
 	   *

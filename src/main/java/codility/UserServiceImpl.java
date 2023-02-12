@@ -1,5 +1,6 @@
 package codility;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,6 +48,14 @@ public class UserServiceImpl {
 
     Map<Long, Long> count(final Map<String, UserStats>... visits) {
 
+
+        List<String> list = new ArrayList<>();
+        list.add("ddd");
+        list.add("asss"); 
+
+        list.remove(1);
+        list.add(1, "ssss");
+        
         Map<Long, Long> finalResult = new HashMap<Long, Long>();
 
         if (Objects.isNull(visits) || visits.length == 0) {

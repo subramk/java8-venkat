@@ -20,10 +20,15 @@ public class BasicLamdasExample {
 				forEach( element -> System.out.println("name is "+ element));
 		
 		List<String> stocks = Arrays.asList("GOOG","AMAZ","ORCL"); 
-	
 		
-		
-		
+	}
+
+
+	private void doSomeChecks(){
+
+	final List<String> lists = Arrays.asList( "kasi","af"); 
+	lists.forEach( x -> System.out.println(x));
+
 	}
 	
 	private static void loop_with_Lamdas(){

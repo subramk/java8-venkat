@@ -1,0 +1,31 @@
+{"items": [
+  {
+    "title": {
+      "reference_code": "Mrs",
+      "short_description": "Mrs",
+      "long_description": "Mrs"
+    },
+    "name": {
+      "family_name": "Dixon",
+      "given_names": "Jenny Kate",
+      "full_name": "Jenny Kate Dixon",
+      "alias_name": "Jenny Kate Dixon"
+    },
+    "date_of_birth": {
+      "year": 1980,
+      "month": 12,
+      "day": 12
+    },
+    "gender": {
+      "reference_code": "F",
+      "short_description": "Female",
+      "long_description": "Female"
+    },
+    "nationality": {
+      "reference_code": "AUS",
+      "short_description": "Australia",
+      "long_description": "Australia"
+    }
+  }
+  ]
+  }
