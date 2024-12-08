@@ -1,4 +1,4 @@
-package challenges.shopping.cart;;
+package challenges.shopping.cart;
 
 import java.util.Objects;
 

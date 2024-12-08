@@ -28,7 +28,7 @@ public class ProcessingStatusWorkerTest {
   @Test
   public void  testWithTwoRuleSets(){
     List<ProcessingStatus> result =  ps.doWork(null);
-    assertEquals(6,result.size());
+    assertEquals(8,result.size());
   }
 
 

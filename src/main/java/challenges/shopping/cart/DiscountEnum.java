@@ -1,4 +1,4 @@
-package challenges.shopping.cart;;
+package challenges.shopping.cart;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

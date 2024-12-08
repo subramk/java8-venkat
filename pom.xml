@@ -12,11 +12,11 @@
     <junit-jupiter-params>5.5.2</junit-jupiter-params>
     <rider-junit5.version>1.7.3</rider-junit5.version>
     <mockito.version>3.1.0</mockito.version>
-    <java.version>17</java.version>
+    <java.version>21</java.version>
     <truth.version>0.34</truth.version>
     <version.guava>29.0-jre</version.guava>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
 
   </properties>
   <version>0.0.1-SNAPSHOT</version>
@@ -221,10 +221,11 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.11</version>
     </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.24</version>
+      <version>1.18.30</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
@@ -258,27 +259,33 @@
       </plugin>
 
       <!-- Required for JUnit 5 Tests to run as well as older JUnit 4 tests  -->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-surefire-plugin</artifactId>-->
+<!--        <configuration>-->
+<!--          <includes>-->
+<!--            <include>**/*.java</include>-->
+<!--          </includes>-->
+<!--        </configuration>-->
+<!--        <version>2.21.0</version>-->
+<!--        <dependencies>-->
+<!--          <dependency>-->
+<!--            <groupId>org.junit.platform</groupId>-->
+<!--            <artifactId>junit-platform-surefire-provider</artifactId>-->
+<!--            <version>1.2.0-M1</version>-->
+<!--          </dependency>-->
+<!--          <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-engine</artifactId>-->
+<!--            <version>5.2.0-M1</version>-->
+<!--          </dependency>-->
+<!--        </dependencies>-->
+<!--      </plugin>-->
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <includes>
-            <include>**/*.java</include>
-          </includes>
-        </configuration>
-        <version>2.21.0</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>1.2.0-M1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.2.0-M1</version>
-          </dependency>
-        </dependencies>
+        <version>3.2.5</version>
       </plugin>
     </plugins>
   </build>

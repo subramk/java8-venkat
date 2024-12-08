@@ -1,5 +1,5 @@
 
-package challenges.shopping.cart;;
+package challenges.shopping.cart;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
